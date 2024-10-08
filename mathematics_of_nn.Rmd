@@ -53,7 +53,7 @@ This presentation is deceptively named because for the sake of teaching I will f
 # Preliminaries
 
 - This presentation is aimed at the someone who wants to learn about Deep Learning without having a background in sophisticated mathematics.
-- To that end, we do need to briefly introduce some concepts from _Linear Algebra_ and _Differential Calculus_, but will focus on an intuitive understanding.
+- We briefly introduce some concepts from _Linear Algebra_ and _Differential Calculus_, but will focus on an intuitive understanding.
 
 # Matricies
 
@@ -89,9 +89,8 @@ if not translation.is_file():
     _ = plt.quiver(*X[:, 1], Z[0, 1], Z[1,1], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.quiver(*X[:, 2], Z[0, 2], Z[1, 2], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.quiver(*X[:, 3], Z[0, 3], Z[1, 3], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
-    plt.show()
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/translation.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 550)
+    _ = plt.savefig("./images/translation.png", bbox_inches = "tight", pad_inches= 0, dpi = 550)
     plt.close("all")
 ```
 
@@ -137,7 +136,7 @@ if not scale.is_file():
     _ = plt.quiver(*X[:, 2], Z[0, 2], Z[1, 2], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.quiver(*X[:, 3], Z[0, 3], Z[1, 3], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/scale.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/scale.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -177,7 +176,7 @@ if not rotation.is_file():
     _ = plt.quiver(*X[:, 2], Z[0, 2], Z[1, 2], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.quiver(*X[:, 3], Z[0, 3], Z[1, 3], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/rotation.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/rotation.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -218,7 +217,7 @@ if not affine.is_file():
     _ = plt.quiver(*X[:, 2], Z[0, 2], Z[1, 2], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.quiver(*X[:, 3], Z[0, 3], Z[1, 3], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/affine.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/affine.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -262,7 +261,7 @@ if not derivative.is_file():
     _ = plt.annotate("$\\frac{\\partial y}{\\partial x} = 1$", (0.5 + 0.03, y_f(0.5)), size = 18)
     _ = plt.annotate("$\\frac{\\partial y}{\\partial x} = 0$", (0 + 0.01, y_f(0) + 0.015), size = 18)
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/derivative.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/derivative.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -322,7 +321,7 @@ if not gradient.is_file():
     _ = ax.set_ylabel('y')
     _ = ax.set_zlabel('z')
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/gradient.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/gradient.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -400,7 +399,7 @@ if not one_layer.is_file():
     _ = plt.margins(0.05, 0.1)
     _ = plt.axis("off")
     _ = plt.text(0.3, 2, "$Y_{1 \\times N} = W^{(1)}_{1 \\times 3} \\cdot X_{3 \\times N} + B^{(1)}_{1 \\times 1}$", fontsize = 35, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
-    _ = plt.savefig("./images/one_layer.png", bbox_inches = "tight", transparent = "False", pad_inches= 0)
+    _ = plt.savefig("./images/one_layer.png", bbox_inches = "tight", pad_inches= 0)
     plt.close("all")
 ```
 
@@ -453,7 +452,7 @@ if not two_layer.is_file():
     _ = plt.axis("off")
     _ = plt.text(0.01, 3.1, "$h^{(1)}_{4 \\times N} = W^{(1)}_{4 \\times 3} \\cdot X_{3 \\times N} + B^{(1)}_{1 \\times 4}$", fontsize = 40, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
     _ = plt.text(1.65, 3.1, "$Y_{1 \\times N} = W^{(2)}_{1 \\times 4} \\cdot \\varrho(h^{(1)}_{4 \\times N}) + B^{(2)}_{1 \\times 1}$", fontsize = 40, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
-    _ = plt.savefig("./images/two_layer.png", bbox_inches = "tight", transparent = "False", pad_inches= 0)
+    _ = plt.savefig("./images/two_layer.png", bbox_inches = "tight", pad_inches= 0)
 plt.close("all")
 ```
 
@@ -510,7 +509,7 @@ if not affine.is_file():
     _ = plt.quiver(*X[:, 2], Z[0, 2], Z[1, 2], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.quiver(*X[:, 3], Z[0, 3], Z[1, 3], angles='xy', scale_units='xy', scale=1., color="black", width = 0.006, alpha = 1)
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/relu.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/relu.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -569,7 +568,7 @@ if not one_layer.is_file():
     _ = plt.margins(0.05, 0.1)
     _ = plt.axis("off")
     _ = plt.text(0.3, 0.001, "$Y_{1 \\times N} = W^{(1)}_{1 \\times 3} \\cdot X_{3 \\times N} + B^{(1)}_{1 \\times 1}$", fontsize = 35, bbox = dict(boxstyle = "round", facecolor = "wheat", alpha=1))
-    _ = plt.savefig("./images/simple_nn.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/simple_nn.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -585,7 +584,7 @@ knitr::include_graphics("./images/simple_nn.png")
 
 # Forward Pass III
 
-```{python epoch0, eval = TRUE, echo = FALSE, results = FALSE}
+```{python forwardp, eval = TRUE, echo = FALSE, results = FALSE}
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -608,11 +607,11 @@ if not forwardp.is_file():
     _ = plt.axline((0, B[0][0]), slope = W[0][0], color = "red")
     _ = plt.text(0.2, 0.05, "$Y = 0.5X + 0$", fontsize = 12)
     _ = plt.title(f"MSE After the First Forward Pass: {round(e, 4)}")
-    _ = plt.savefig("./images/forwardp.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/forwardp.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
-```{r epoch0Image, echo = FALSE, fig.align = "center", dpi = 600}
+```{r forwardpImage, echo = FALSE, fig.align = "center", dpi = 600}
 knitr::include_graphics("./images/forwardp.png")
 ```
 
@@ -622,7 +621,7 @@ Obviously this isn't a great fit, so next we will discuss how to make it better!
 
 # Deep Learning Roadmap:  Optimization
 
-- The optimization step has the goal of _learning_ the values of $W$ and $B$ that minimized the MSE @chollet2021deep.
+- The optimization step has the goal of _learning_ the values of $W$ and $B$ that minimize the MSE @chollet2021deep.
 
 ```{r deepLearningOptimizer, echo = FALSE, dpi = 400, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/deep_learning_optimizer.PNG", auto_pdf = TRUE)
@@ -654,7 +653,7 @@ if not gradient_descent_title.is_file():
     _ = plt.title("The Gradient Descent Algorithm to Find the Minimum of a Parabola")
     _ = plt.xlabel("$w$")
     _ = plt.ylabel("$e$")
-    _ = plt.savefig("./images/gradient_descent_title.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/gradient_descent_title.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -709,7 +708,7 @@ if not updatew.is_file():
     _ = plt.xlabel("$w$")
     _ = plt.ylabel("$e$")
     _ = plt.gcf().set_size_inches(7, 5)
-    _ = plt.savefig("./images/updatew.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/updatew.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -726,7 +725,7 @@ This plot show how moving W to the right has the affect of decreasing it's gradi
 - Adjusting $W$ and $B$ using gradient descent and updating the model predictions is called a _backward pass_.
 - Each cycle of a _forward pass_ followed by a _backward pass_ is called an _epoch_.
 
-```{python tmp, eval = TRUE, echo = FALSE, results = FALSE}
+```{python backwardPass, eval = TRUE, echo = FALSE, results = FALSE}
 import sympy as sym
 import numpy as np
 import matplotlib.pyplot as plt
@@ -741,28 +740,28 @@ class GradientDescent:
         self.lr = lr
         self.x = x
         self.y = y
-
+        
         x1, x2, x3, x4 = sym.symbols('x1 x2 x3 x4')
         X = sym.Matrix([[x1, x2, x3, x4]])
-
+        
         y1, y2, y3, y4 = sym.symbols('y1 y2 y3 y4')
         Y = sym.Matrix([[y1, y2, y3, y4]])
-
+        
         w = sym.symbols('w')
         W = sym.Matrix([[w]])
-
+        
         b = sym.symbols('b')
         B = sym.Matrix([[b, b, b, b]])
-
+        
         K = (Y - (W*X + B))
         K_diag = sym.diag(K[0], K[1], K[2], K[3])
-
+        
         self.MSE = ((0.5*(K*K_diag))*(sym.ones(1, 4)).T)[0]
         self.dW = 0.25*self.MSE.diff(w)
         self.dB = 0.25*self.MSE.diff(b)
         self.Wu = W[0] - self.lr*self.dW
         self.Bu = B[0] - self.lr*self.dB
-
+        
     def values(self, w, b):
         vals = Merge(self.x, self.y)
         vals["w"] = w
@@ -775,7 +774,7 @@ class GradientDescent:
         Bu = float(self.Bu.subs(vals))
         
         return({"MSE": MSE, "dW": dW, "dB": dB, "Wu": Wu, "Bu": Bu})
-    
+        
     def backward_pass(self, w, b):
         dfs = []
         ru = self.values(w, b)
@@ -816,12 +815,77 @@ if not epoch10.is_file():
     _ = plt.axline((0, B[0][0]), slope = W[0][0], color = "red")
     _ = plt.text(0.2, 0.2, f"$Y = {round(W[0][0], 2)}X + {round(B[0][0], 2)}$", fontsize = 12)
     _ = plt.title(f"MSE after 10 Epochs: {round(e, 4)}")
-    _ = plt.savefig("./images/epoch10.png", bbox_inches = "tight", transparent = "True", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/epoch10.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
 ```{r epoch10Image, echo = FALSE, fig.align = "center", dpi = 700}
 knitr::include_graphics("./images/epoch10.png")
+```
+
+# A Real Example
+
+# Another Layer
+
+- In this toy example, there is some non-linearity that isn't be captured by a single layer neural network. 
+
+```{python tmp, eval = FALSE, echo = FALSE, results = FALSE}
+import numpy as np
+import matplotlib.pyplot as plt
+import setuptools
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, Input
+from keras import optimizers, regularizers
+
+Y = np.array([0.2, 0.25, 0.4, 0.7])
+X = np.array([0.1, 0.3, 0.6, 0.7])
+# X = np.array(np.linspace(0, 2, 4))
+# Y = X**2+ np.random.rand(4)
+
+# Single Layer
+input_layer = Input((1,))
+output_layer= Dense(1, activation="linear")(input_layer)
+
+sl_model = Model(inputs=input_layer, outputs=output_layer)
+
+sl_model.compile(
+    optimizer=optimizers.SGD(learning_rate=0.1),
+    loss='mse')
+
+myfit = sl_model.fit(X, Y, epochs = 1000)
+
+sl_Xfitted = np.linspace(0, 0.8, 1001)
+sl_Yfitted = sl_model.predict(sl_Xfitted)
+
+# Two Layers
+input_layer = Input((1,))
+Layer_1 = Dense(10, activation = "relu")(input_layer)
+Layer_2 = Dense(20, activation = "relu")(Layer_1)
+output_layer= Dense(1, activation="linear", 
+    kernel_regularizer=regularizers.L1L2(l1=1e-5, l2=1e-4),
+    bias_regularizer=regularizers.L2(1e-4),
+    activity_regularizer=regularizers.L2(1e-5))(Layer_2)
+
+tl_model = Model(inputs=input_layer, outputs=output_layer)
+
+tl_model.compile(
+    optimizer=optimizers.SGD(learning_rate=0.1),
+    loss='mse')
+
+myfit = tl_model.fit(X, Y, epochs = 1000)
+
+tl_Xfitted = np.linspace(0, 0.8, 1001)
+tl_Yfitted = tl_model.predict(tl_Xfitted)
+
+# Plot the results
+plt.clf()
+_ = plt.figure(figsize = (5, 3))
+_ = plt.scatter(X, Y)
+_ = plt.plot(sl_Xfitted, sl_Yfitted, color = "red", alpha = 0.5)
+_ = plt.plot(tl_Xfitted, tl_Yfitted, color = "green", alpha = 0.5)
+_ = plt.savefig("./images/tmp.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
+plt.close("all")
+
 ```
 
 # References {.allowframebreaks}
