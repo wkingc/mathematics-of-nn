@@ -722,7 +722,7 @@ This plot show how moving W to the right has the affect of decreasing it's gradi
 
 # Backward Pass
 
-- Adjusting $W$ and $B$ using gradient descent and updating the model predictions is called a _backward pass_.
+- Adjusting $W$ and $B$ using gradient descent is called a _backward pass_.
 - Each cycle of a _forward pass_ followed by a _backward pass_ is called an _epoch_.
 
 ```{python backwardPass, eval = TRUE, echo = FALSE, results = FALSE}
