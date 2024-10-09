@@ -1,4 +1,4 @@
-source("renv/activate.R")
+# source("renv/activate.R")
 
-library("reticulate")
-use_virtualenv("./pyenv", required = TRUE)
+# library("reticulate")
+# use_virtualenv("./pyenv", required = TRUE)
