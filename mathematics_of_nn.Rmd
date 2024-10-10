@@ -1,5 +1,5 @@
 ---
-title: "Mathematical Intuition of Deep Learning"
+title: "The Mathematical Intuition of Deep Learning"
 author: Wade Copeland
 date: "`r format(as.POSIXlt(Sys.time(), tz = 'America/New_York'), '%d %B, %Y')`"
 output: 
@@ -21,7 +21,7 @@ csl: ./csl/apa-numeric-superscript-brackets.csl
 - Beamer Theme Matrix:  https://mpetroff.net/files/beamer-theme-matrix/
 -->
 
-```{r options, eval = TRUE, echo = FALSE}
+```{r rPrelims, eval = TRUE, echo = FALSE}
 # Create a chunk option for setting the size of code.
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
@@ -30,15 +30,34 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 })
 ```
 
+```{python pyPrelims, eval = TRUE, echo = FALSE}
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from pathlib import Path
+import math
+import sympy as sym
+import networkx as nx
+import pandas as pd
+from PIL import Image
+from tensorflow.keras.datasets import mnist
+```
+
 \emph{\Large Learning the math behind a statistical method is like learning the secret to a magic trick.  Once you know the math, you can never be fooled by the same trick again.}
+
+# 2024 Nobel Prize in Physics @nobel2024
+
+```{r nobelImage, echo = FALSE, dpi = 550, fig.align = "center", results = 'asis'}
+knitr::include_graphics("./images/nobel_nn.png", auto_pdf = TRUE)
+```
 
 # Applications to the Oversight Mission
 
 - Each IG is responsible for the oversight of agencies that will implement deep learning to make more informed and better decisions, but come with risks such as bias, privacy, lack of transparency, and ethical complexities.
-- Each IG will use deep leaning to provide better oversight.
+- Each OIG will use deep leaning to provide better oversight.
     - Auditors will use deep learning to write better recommendations based on data about how clients responded to previous recommendations.
-    - Evaluators will use deep learning to find evidence of systemic problems using large volumes of data.
-    - Investigators will use deep learning to find leads based on patterns previously observed their case data.
+    - Evaluators will use deep learning to find evidence of systemic problems in large volumes of data.
+    - Investigators will use deep learning to find leads based on patterns observed their case data.
     
 # The Deep in Deep Learning
 
@@ -68,10 +87,6 @@ This presentation is deceptively named because for the sake of teaching I will f
     - The columns of $X_{2 \times 6} = \begin{bmatrix} 0 & 0 & 1 & 1 & 0 & 0 \\  0 & 1 & 1 & 0 & 0 & 1 \end{bmatrix}$ describe a square in 2-dimensional space.  We can translate the square by $0.2$ units by adding $0.2$ to each element of $X_{2 \times 6}$.
 
 ```{python matrixTranslation, eval = TRUE, echo = FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
 B = np.array([0.2])
 Ztrans = X + B
@@ -110,10 +125,6 @@ knitr::include_graphics("./images/translation.png")
 - $X_{2 \times 6}$ can be scaled by $50\%$ taking the dot product of $\begin{bmatrix} 0.5 & 0 \\ 0 & 0.5 \end{bmatrix}$ and $X_{2 \times 6}$.
 
 ```{python matrixScale, eval = TRUE, echo = FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
 B = np.array([0.5])
 W = np.array([
@@ -149,11 +160,6 @@ knitr::include_graphics("./images/scale.png")
 - $X_{2 \times 6}$ can be rotated by negative 10 degrees by taking the dot product of $\begin{bmatrix} cos(0.175) & -sin(0.175) \\ sin(0.175) & cos(0.175) \end{bmatrix}$ and $X_{2 \times 6}$.
 
 ```{python matrixRotation, eval = TRUE, echo = FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-import math
-
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
 theta = math.radians(-10)
 W = np.array([
@@ -189,11 +195,6 @@ knitr::include_graphics("./images/rotation.png")
 - An affine transformation of $X_{2 \times 6}$ combines transformation and translation.  For example, combining the rotation transformation of $-10$ degrees and translation of $0.2$ units.
 
 ```{python matrixAffine, eval = TRUE, echo = FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-import math
-
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
 B = np.array([[0.2], [-0.2]])
 theta = math.radians(-10)
@@ -230,11 +231,6 @@ knitr::include_graphics("./images/affine.png")
 - A derivative measures the rate of change or slope at any point denoted by $\frac{\partial y}{\partial x}$, which is read "the change in $y$ with respect to the change in $x$."
 
 ```{python derivative, eval = TRUE, echo = FALSE}
-import matplotlib.pyplot as plt
-import sympy as sym
-import numpy as np
-from pathlib import Path
-
 x = sym.symbols("x")
 y = (x)**2
 dy = sym.diff(y, x)
@@ -282,15 +278,7 @@ knitr::include_graphics("./images/derivative.png")
 - The gradient is a generalization of the derivative that measures the rate of change or slope in every direction.  For example, if we have the surface $z = x^2 + y^2$ the slope in the $x$ direction is $\frac{\partial z}{\partial x} = 2x$ and the slope in the $y$ direction is $\frac{\partial z}{\partial y} = 2y$.
 
 ```{python gradient, eval = TRUE, echo = FALSE}
-import sympy as sym
-from sympy import symbols
-from matplotlib import cm
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-import numpy as np
-from pathlib import Path
-
-x, y = symbols('x y')
+x, y = sym.symbols('x y')
 
 z = x**2 + y**2
 z_f = sym.lambdify((x, y), z, "numpy")
@@ -313,7 +301,7 @@ if not gradient.is_file():
     plt.clf()
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d', computed_zorder=False)
-    _ = ax.plot_surface(x_num, y_num, z_num, cmap=cm.viridis, linewidth=0, antialiased=True, alpha = 0.8)
+    _ = ax.plot_surface(x_num, y_num, z_num, cmap=plt.cm.viridis, linewidth=0, antialiased=True, alpha = 0.8)
     _ = ax.view_init(-140, 60)
     _ = ax.scatter(0, 0, 0, c='red', s=75, marker = "^")
     _ = ax.scatter(-3, -3, 18, c='yellow', s=100, marker = "*")
@@ -370,10 +358,6 @@ knitr::include_graphics("./images/deep_learning_layers.PNG", auto_pdf = TRUE)
 - A single layer Neural Network is represented by the affine transformation $Y = W \cdot X + B$ @berner2021modern.
 
 ```{python singleLayer, eval = TRUE, echo = FALSE}
-import networkx as nx
-import matplotlib.pyplot as plt
-from pathlib import Path
-
 G = nx.DiGraph([("$x_3$", "y"), ("$x_2$", "y"), ("$x_1$", "y")])
 left_nodes = ["$x_3$", "$x_2$", "$x_1$"]
 right_nodes = ["y"]
@@ -412,10 +396,6 @@ knitr::include_graphics("./images/one_layer.png")
 - A two layer Neural Network includes a layer of _neurons_ between the features and the outcome.  These are called _hidden neurons_ because they are not observed in the input data @berner2021modern.
 
 ```{python twoLayer, eval = TRUE, echo = FALSE}
-import networkx as nx
-import matplotlib.pyplot as plt
-from pathlib import Path
-
 G = nx.DiGraph([
     ("$x_3$", "$h_1$"), ("$x_3$", "$h_2$"), ("$x_3$", "$h_3$"), ("$x_3$", "$h_4$"),
     ("$x_2$", "$h_1$"), ("$x_2$", "$h_2$"), ("$x_2$", "$h_3$"), ("$x_2$", "$h_4$"),
@@ -479,11 +459,6 @@ W^{(2)}_{1 \times 4} \cdot (W^{(1)}_{4 \times 3} \cdot X_{3 \times N} + B^{(1)}_
 - A common $\varrho(h)$ is the _ReLU_ transformation which replaces all negative values with 0 @berner2021modern.
 
 ```{python matrixRelu, eval = TRUE, echo = FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-import math
-
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
 B = np.array([[0.2], [-0.2]])
 theta = math.radians(-10)
@@ -527,7 +502,7 @@ knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
 
 # Mean Squared Error
 
-- The most common measure of loss is the _Mean Squared Error_, which measures the average of the squared deviations from the observed outcomes and our prediction of them @chollet2021deep.
+- For a numeric outcome the most common measure of loss is the _Mean Squared Error_, which measures the average of the squared deviations from the observed outcomes and our predictions of them @chollet2021deep.
 
 \begin{equation*}
 e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2
@@ -539,10 +514,6 @@ e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2
 - The _forward pass_ calculates the predictions of the outcome from the input data using the values of $W$ and $B$ @chollet2021deep.
 
 ```{python simplenn, eval = TRUE, echo = FALSE}
-import networkx as nx
-import matplotlib.pyplot as plt
-from pathlib import Path
-
 G = nx.DiGraph([("$x_1$", "y")])
 left_nodes = ["$x_1$"]
 right_nodes = ["y"]
@@ -585,10 +556,6 @@ knitr::include_graphics("./images/simple_nn.png")
 # Forward Pass III
 
 ```{python forwardp, eval = TRUE, echo = FALSE, results = FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-
 Y = np.array([[0.2, 0.25, 0.4, 0.7]])
 X = np.array([[0.1, 0.3, 0.6, 0.7]])
 W = np.array([[0.5]])
@@ -632,10 +599,6 @@ knitr::include_graphics("./images/deep_learning_optimizer.PNG", auto_pdf = TRUE)
 - $e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2$ is a parabola like $x^2$ that we saw previously.  Therefore it has a single minimum where the gradient is zero @gradient_descent.
 
 ```{python gradientDescent, eval = TRUE, echo = FALSE, results = FALSE}
-from PIL import Image
-import matplotlib.pyplot as plt
-from pathlib import Path
-
 image = Image.open("./images/gradient_descent.png")
 
 gradient_descent_title = Path("./images/gradient_descent_title.png")
@@ -673,11 +636,6 @@ knitr::include_graphics("./images/gradient_descent_title.png", auto_pdf = TRUE)
     - The updated value of $b$ is $b_u = b - \alpha(\frac{\partial e}{\partial b})$.
 
 ```{python updatew, eval = TRUE, echo = FALSE, results = FALSE}
-import matplotlib.pyplot as plt
-import sympy as sym
-import numpy as np
-from pathlib import Path
-
 x = sym.symbols("x")
 y = x**2
 dy = sym.diff(y, x)
@@ -717,20 +675,16 @@ knitr::include_graphics("./images/updatew.png")
 ```
 
 <!--
-This plot show how moving W to the right has the affect of decreasing it's gradient.
+- This plot shows how moving $W$ to the right has the affect of decreasing it's gradient.
+- Alpha is the learning rate.  In more complex cases where there may be many minimums, setting this parameter well prevent the algorithm from getting stuck at a local minimum instead of the absolute minimum.
 -->
 
 # Backward Pass
 
-- Adjusting $W$ and $B$ using gradient descent is called a _backward pass_.
-- Each cycle of a _forward pass_ followed by a _backward pass_ is called an _epoch_.
+- Adjusting the values of $W$ and $B$ using gradient descent is called is called a _backward pass_ @chollet2021deep.
+- Each cycle of a _forward pass_ followed by a _backward pass_ is called an _epoch_ @chollet2021deep.
 
 ```{python backwardPass, eval = TRUE, echo = FALSE, results = FALSE}
-import sympy as sym
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-
 def Merge(dict1, dict2):
     res = {**dict1, **dict2}
     return res
@@ -793,10 +747,6 @@ res = x.backward_pass(w = 0.5, b = 0)
 ```
 
 ```{python epoch10, eval = TRUE, echo = FALSE, results = FALSE}
-import matplotlib.pyplot as plt
-import numpy as np
-from pathlib import Path
-
 Y = np.array([[0.2, 0.25, 0.4, 0.7]])
 X = np.array([[0.1, 0.3, 0.6, 0.7]])
 W = np.array([[res.iloc[9]["Wu"]]])
@@ -823,69 +773,105 @@ if not epoch10.is_file():
 knitr::include_graphics("./images/epoch10.png")
 ```
 
-# A Real Example
+# A Real Example:  Digit Image Classification
 
-# Another Layer
+- One of the best use cases for Neural Networks is image classification.
+- We will use the MNIST data set that is 70,000 images of hand-written digits 0-9 that are 28x28 pixels @chollet2015keras.  
 
-- In this toy example, there is some non-linearity that isn't be captured by a single layer neural network. 
+```{python mnist, eval = TRUE, echo = FALSE, results = FALSE}
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+digit = train_images[4]
 
-```{python tmp, eval = FALSE, echo = FALSE, results = FALSE}
-import numpy as np
-import matplotlib.pyplot as plt
-import setuptools
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, Input
-from keras import optimizers, regularizers
+mnist = Path("./images/mnist.png")
 
-Y = np.array([0.2, 0.25, 0.4, 0.7])
-X = np.array([0.1, 0.3, 0.6, 0.7])
-# X = np.array(np.linspace(0, 2, 4))
-# Y = X**2+ np.random.rand(4)
-
-# Single Layer
-input_layer = Input((1,))
-output_layer= Dense(1, activation="linear")(input_layer)
-
-sl_model = Model(inputs=input_layer, outputs=output_layer)
-
-sl_model.compile(
-    optimizer=optimizers.SGD(learning_rate=0.1),
-    loss='mse')
-
-myfit = sl_model.fit(X, Y, epochs = 1000)
-
-sl_Xfitted = np.linspace(0, 0.8, 1001)
-sl_Yfitted = sl_model.predict(sl_Xfitted)
-
-# Two Layers
-input_layer = Input((1,))
-Layer_1 = Dense(10, activation = "relu")(input_layer)
-Layer_2 = Dense(20, activation = "relu")(Layer_1)
-output_layer= Dense(1, activation="linear", 
-    kernel_regularizer=regularizers.L1L2(l1=1e-5, l2=1e-4),
-    bias_regularizer=regularizers.L2(1e-4),
-    activity_regularizer=regularizers.L2(1e-5))(Layer_2)
-
-tl_model = Model(inputs=input_layer, outputs=output_layer)
-
-tl_model.compile(
-    optimizer=optimizers.SGD(learning_rate=0.1),
-    loss='mse')
-
-myfit = tl_model.fit(X, Y, epochs = 1000)
-
-tl_Xfitted = np.linspace(0, 0.8, 1001)
-tl_Yfitted = tl_model.predict(tl_Xfitted)
-
-# Plot the results
-plt.clf()
-_ = plt.figure(figsize = (5, 3))
-_ = plt.scatter(X, Y)
-_ = plt.plot(sl_Xfitted, sl_Yfitted, color = "red", alpha = 0.5)
-_ = plt.plot(tl_Xfitted, tl_Yfitted, color = "green", alpha = 0.5)
-_ = plt.savefig("./images/tmp.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
-plt.close("all")
-
+if not mnist.is_file():
+    plt.clf()
+    _ = plt.figure(figsize = (5, 3))
+    _ = plt.imshow(digit, cmap=plt.cm.binary)
+    _ = plt.savefig("./images/mnist.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
+    plt.close("all")
 ```
+
+```{r mnistImage, echo = FALSE, fig.align = "center", dpi = 700}
+knitr::include_graphics("./images/mnist.png")
+```
+
+# A Real Example:  Data Setup
+
+- For analysis each image map of 28x28 pixels needs to be converted into a vector of size 28*28 = 784.
+- The images are separated into a set of 60,000 images for training the model and a set of 10,000 images for testing the prediction accuracy in unseen data. \newline
+
+```{python mnistDataSetup, eval = TRUE, echo = TRUE, results = TRUE, size = "scriptsize"}
+from tensorflow.keras.datasets import mnist
+
+(train_images, train_labels), (test_images, test_labels) = (
+    mnist.load_data()
+)
+
+train_images = train_images.reshape((60000, 28 * 28))
+test_images = test_images.reshape((10000, 28 * 28))
+```
+
+# A Real Example:  Model Setup
+
+-  The first layer of the Neural Network contains 512 hidden neurons and uses the ReLU activation function.
+-  The output layer of the Neural Network is a 10-way Softmax classification layer that returns the probability that each digit belongs to a specific class. \newline
+
+```{python mnistModelSetup, eval = TRUE, echo = TRUE, results = TRUE, size = "scriptsize"}
+from tensorflow import keras 
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+    layers.Dense(512, activation="relu"),
+    layers.Dense(10, activation="softmax")
+])
+```
+
+# A Real Example:  Model Compilation
+
+- The __loss__ argument specifies how the model loss is calculated at the end of each _forward pass_.
+- The __optimizer__ argument specifics the optimization algorithm used to update the parameter values for the _backward pass_.
+- The __metric__ argument specifics how we will assess the model performance. \newline
+
+```{python mnistModelCompilation, eval = TRUE, echo = TRUE, results = TRUE, size = "scriptsize"}
+model.compile(
+    loss="sparse_categorical_crossentropy",
+    optimizer="rmsprop",
+    metrics=["accuracy"])
+```
+
+<!-- 
+Sparse categorical cross entropy
+-->
+
+# A Real Example:  Model Fit
+
+- In the test data, the fitted neural network correctly classified each digit greater than 95\% of the time!
+- The difference in the accuracy of the training data and test data is an example of _overfitting_ @chollet2021deep. \newline
+
+```{python mnistModelFit, eval = TRUE, echo = TRUE, results = TRUE, size = "scriptsize"}
+_ = model.fit(
+    train_images, train_labels, epochs=5, batch_size=128, verbose = 0)
+
+train_acc = model.evaluate(train_images, train_labels, verbose = 0)[1]
+test_acc = model.evaluate(test_images, test_labels, verbose = 0)[1]
+
+train_acc
+test_acc
+```
+
+<!--
+- Overfitting:  where machine learning models tend to perform worse on new data than the data they were trained on.
+- As a funny aside, this model using the MNIST data is better at the task of identifying digits than humans.
+-->
+
+# Summary
+
+- This presentation peeled back the layers of what appears to be the _magic_ of deep learning.
+    - We discussed how _layers_ in a Neural Network are like sieves for creating increasingly purified information.
+    - We showed that the mathematical representation of each layer is just a combination of translation and transformation.
+    - We explained that the purpose of the _activation function_ applied to each layer is to detect non-linearity.
+    - We showed how after each _forward pass_ from the input to the output of the model, how the parameters in each layer are updated in the _backward pass_.
+    - We concluded by presenting an example of fitting a Neural Network model using real data in Python.
 
 # References {.allowframebreaks}
