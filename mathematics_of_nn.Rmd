@@ -502,11 +502,13 @@ knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
 
 # Mean Squared Error
 
-- For a numeric outcome the most common measure of loss is the _Mean Squared Error_, which measures the average of the squared deviations from the observed outcomes and our predictions of them @chollet2021deep.
+- For a numeric outcome a commen measure of loss is the _Mean Squared Error_, which measures the average of the squared deviations from the observed outcomes and our predictions of them @fox2008applied.
 
 \begin{equation*}
 e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2
 \end{equation*}
+
+- There are many other loss functions as well, such as _categorical cross entropy_, which can be used to measure loss when the outcome is categorical @chollet2021deep.
 
 # Forward Pass I
 
@@ -563,7 +565,7 @@ B = np.array([[0]])
 
 Y_pred = np.dot(W, X) + B
 
-e = 0.5*(((Y-Y_pred)**2).sum())
+e = 0.25*(((Y-Y_pred)**2).sum())
 
 forwardp = Path("./images/forwardp.png")
 
@@ -583,6 +585,8 @@ knitr::include_graphics("./images/forwardp.png")
 ```
 
 <!--
+Example from:  https://towardsdatascience.com/training-a-neural-network-by-hand-1bcac4d82a6e.
+
 Obviously this isn't a great fit, so next we will discuss how to make it better!
 -->
 
@@ -710,7 +714,7 @@ class GradientDescent:
         K = (Y - (W*X + B))
         K_diag = sym.diag(K[0], K[1], K[2], K[3])
         
-        self.MSE = ((0.5*(K*K_diag))*(sym.ones(1, 4)).T)[0]
+        self.MSE = ((0.25*(K*K_diag))*(sym.ones(1, 4)).T)[0]
         self.dW = 0.25*self.MSE.diff(w)
         self.dB = 0.25*self.MSE.diff(b)
         self.Wu = W[0] - self.lr*self.dW
@@ -734,7 +738,7 @@ class GradientDescent:
         ru = self.values(w, b)
         dfs.append(pd.DataFrame(ru, index = [1]))
         
-        for i in range(9):
+        for i in range(100):
             ru = self.values(ru["Wu"], ru["Bu"])
             dfs.append(pd.DataFrame(ru, index = [1]))
         
@@ -749,14 +753,14 @@ res = x.backward_pass(w = 0.5, b = 0)
 ```{python epoch10, eval = TRUE, echo = FALSE, results = FALSE}
 Y = np.array([[0.2, 0.25, 0.4, 0.7]])
 X = np.array([[0.1, 0.3, 0.6, 0.7]])
-W = np.array([[res.iloc[9]["Wu"]]])
-B = np.array([[res.iloc[9]["Bu"]]])
+W = np.array([[res.iloc[100]["Wu"]]])
+B = np.array([[res.iloc[100]["Bu"]]])
 
 Y_pred = np.dot(W, X) + B
 
-e = 0.5*(((Y-Y_pred)**2).sum())
+e = 0.25*(((Y-Y_pred)**2).sum())
 
-epoch10 = Path("./images/epoch10.png")
+epoch10 = Path("./images/epoch100.png")
 
 if not epoch10.is_file():
     plt.clf()
@@ -764,13 +768,13 @@ if not epoch10.is_file():
     _ = plt.scatter(X, Y)
     _ = plt.axline((0, B[0][0]), slope = W[0][0], color = "red")
     _ = plt.text(0.2, 0.2, f"$Y = {round(W[0][0], 2)}X + {round(B[0][0], 2)}$", fontsize = 12)
-    _ = plt.title(f"MSE after 10 Epochs: {round(e, 4)}")
-    _ = plt.savefig("./images/epoch10.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
+    _ = plt.title(f"MSE after 100 Epochs: {round(e, 4)}")
+    _ = plt.savefig("./images/epoch100.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
 
 ```{r epoch10Image, echo = FALSE, fig.align = "center", dpi = 700}
-knitr::include_graphics("./images/epoch10.png")
+knitr::include_graphics("./images/epoch100.png")
 ```
 
 # A Real Example:  Digit Image Classification
