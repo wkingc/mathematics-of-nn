@@ -500,7 +500,7 @@ knitr::include_graphics("./images/relu.png")
 knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
 ```
 
-# Mean Squared Error
+# Measures of Loss
 
 - For a numeric outcome a common measure of loss is the _Mean Squared Error_, which measures the average of the squared deviations from the observed outcomes and our predictions of them @fox2008applied.
 
@@ -508,7 +508,7 @@ knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
 e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2
 \end{equation*}
 
-- There are many other loss functions as well, such as _categorical cross entropy_, which can be used to measure loss when the outcome is categorical @chollet2021deep.
+- There are many other measure of loss, such as _categorical cross entropy_, which can be used to measure loss when the outcome is categorical @chollet2021deep.
 
 # Forward Pass I
 
