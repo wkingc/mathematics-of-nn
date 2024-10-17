@@ -190,6 +190,10 @@ if not rotation.is_file():
 knitr::include_graphics("./images/rotation.png")
 ```
 
+<!--
+A "radian" and a "degree" are both units used to measure angles, but a radian is defined based on the ratio of an arc length to the radius of a circle, while a degree is one of 360 equal parts of a full circle, making a radian significantly larger than a degree; essentially, radians are a more mathematically natural unit, while degrees are more convenient for everyday use due to their familiar division system.
+-->
+
 # Matris Transformation:  Affine
 
 - An affine transformation of $X_{2 \times 6}$ combines transformation and translation.  For example, combining the rotation transformation of $-10$ degrees and translation of $0.2$ units.
@@ -600,7 +604,8 @@ knitr::include_graphics("./images/deep_learning_optimizer.PNG", auto_pdf = TRUE)
 
 # Gradient Descent I
 
-- $e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2$ is a parabola like $x^2$ that we saw previously.  Therefore it has a single minimum where the gradient is zero @gradient_descent.
+- Optimization is done numerically through an algorithm called _gradient descent_.
+- Gradient descent works by stepping down a function in the opposite direction of the gradient @gradient_descent.
 
 ```{python gradientDescent, eval = TRUE, echo = FALSE, results = FALSE}
 image = Image.open("./images/gradient_descent.png")
@@ -627,11 +632,6 @@ if not gradient_descent_title.is_file():
 ```{r gradientDescentTitleImage, echo = FALSE, dpi = 900, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/gradient_descent_title.png", auto_pdf = TRUE)
 ```
-
-<!--
-- In this example, our initial value of W is -0.5, and at the point the rate of change is -1.  After updating W, the new value is -0.2, and at that point the rate of change is -0.4.
-- This step-down behavior is characteristic of a gradient descent algorithm.
--->
 
 # Gradient Descent II
 
@@ -679,8 +679,22 @@ knitr::include_graphics("./images/updatew.png")
 ```
 
 <!--
-- This plot shows how moving $W$ to the right has the affect of decreasing it's gradient.
-- Alpha is the learning rate.  In more complex cases where there may be many minimums, setting this parameter well prevent the algorithm from getting stuck at a local minimum instead of the absolute minimum.
+- In this example, our initial value of W is -0.5, and at this point the rate of change is -1.  After updating W, the new value is -0.2, and at this point the rate of change is -0.4.
+- This step-down behavior is characteristic of a gradient descent algorithm.
+- Alpha is the learning rate.  In more complex cases where there may be many minimums, setting this parameter can prevent the algorithm from getting stuck at a local minimum instead of the absolute minimum.
+-->
+
+# A Note About Calculating Gradients
+
+- In the previous slides we made the assumption that calculating the gradient of a loss function is easy, but for Neural Networks with many layers and thousands of parameters, this is not true.
+- The problem of efficiently calculating the gradient is solved using _backpropagation_.
+    - Backpropagation works by chaining together the gradients of very simple expressions, like the affine transformations that define each layer of a Neural Network, to derive the gradient of a very complicated expression like the MSE.
+    - All of the individual gradients taken together have the appearance of being taped together, which is why backpropagation is sometimes called _gradient tape_.
+
+<!--
+    - If we have two functions $f(x)$ and $g(x)$ and we want to calculate $\frac{\partial f(g(x))}{\partial x}$ the chain rule states $\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial x}$.
+    - If we have three functions $f(x)$, $g(x)$, $h(x)$ and we want to calculate $\frac{\partial f(g(h(x)))}{\partial x}$ the chain rules statues that $\frac{\partial f(g(h(x)))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial x}$.
+    - If we have four functions $f(x)$, $g(x)$, $h(x)$, $j(x)$ and we want to calculate $\frac{\partial f(g(h(j(x))))}{\partial x}$ the chain rule states $\frac{\partial f(g(h(j(x))))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial j(x)} * \frac{\partial j(x)}{\partial x}$.
 -->
 
 # Backward Pass
@@ -845,7 +859,8 @@ model.compile(
 ```
 
 <!-- 
-Sparse categorical cross entropy
+- Sparse categorical cross entropy is a measure of loss for categorical data.
+- RMSprop is a special form of gradient descent that includes _momentum_ to prevent the algorithm from getting stuck at a local minima.
 -->
 
 # A Real Example:  Model Fit
@@ -866,7 +881,7 @@ test_acc
 
 <!--
 - Overfitting:  where machine learning models tend to perform worse on new data than the data they were trained on.
-- As a funny aside, this model using the MNIST data is better at the task of identifying digits than humans.
+- As a aside, this model using the MNIST data is better at the task of identifying handwritten digits than humans who are only correct 90% of the time.
 -->
 
 # Summary
@@ -874,8 +889,8 @@ test_acc
 - This presentation peeled back the layers of what appears to be the _magic_ of deep learning.
     - We discussed how _layers_ in a Neural Network are like sieves for creating increasingly purified information.
     - We showed that the mathematical representation of each layer is just a combination of translation and transformation.
-    - We explained that the purpose of the _activation function_ applied to each layer is to detect non-linearity.
-    - We showed how after each _forward pass_ from the input to the output of the model, how the parameters in each layer are updated in the _backward pass_.
+    - We explained that the purpose of the _activation function_ applied to each layer is to detect non-linearity in the output function.
+    - We showed how after each _forward pass_ from the input to the output of the model, how the parameters in each layer are updated in the _backward pass_ using _gradient descent_ and _backpropagation_.
     - We concluded by presenting an example of fitting a Neural Network model using real data in Python.
 
 # References {.allowframebreaks}
