@@ -689,12 +689,14 @@ knitr::include_graphics("./images/updatew.png")
 - In the previous slides we made the assumption that calculating the gradient of a loss function is easy, but for Neural Networks with many layers and thousands of parameters, this is not true.
 - The problem of efficiently calculating the gradient is solved using _backpropagation_.
     - Backpropagation works by chaining together the gradients of very simple expressions, like the affine transformations that define each layer of a Neural Network, to derive the gradient of a very complicated expression like the MSE.
-    - All of the individual gradients taken together have the appearance of being taped together, which is why backpropagation is sometimes called _gradient tape_.
+    - All of the individual gradients taken together have the appearance of being taped together across the computations of a Neural Network, which is why backpropagation is sometimes called _gradient tape_.
 
 <!--
-    - If we have two functions $f(x)$ and $g(x)$ and we want to calculate $\frac{\partial f(g(x))}{\partial x}$ the chain rule states $\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial x}$.
-    - If we have three functions $f(x)$, $g(x)$, $h(x)$ and we want to calculate $\frac{\partial f(g(h(x)))}{\partial x}$ the chain rules statues that $\frac{\partial f(g(h(x)))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial x}$.
-    - If we have four functions $f(x)$, $g(x)$, $h(x)$, $j(x)$ and we want to calculate $\frac{\partial f(g(h(j(x))))}{\partial x}$ the chain rule states $\frac{\partial f(g(h(j(x))))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial j(x)} * \frac{\partial j(x)}{\partial x}$.
+- The nerdy side of me really wishes I could spend more time on this topic.  Backpropagation is an elegant solution to a difficult problem that deserves more attentions than this.
+
+- If we have two functions $f(x)$ and $g(x)$ and we want to calculate $\frac{\partial f(g(x))}{\partial x}$ the chain rule states $\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial x}$.
+- If we have three functions $f(x)$, $g(x)$, $h(x)$ and we want to calculate $\frac{\partial f(g(h(x)))}{\partial x}$ the chain rules statues that $\frac{\partial f(g(h(x)))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial x}$.
+- If we have four functions $f(x)$, $g(x)$, $h(x)$, $j(x)$ and we want to calculate $\frac{\partial f(g(h(j(x))))}{\partial x}$ the chain rule states $\frac{\partial f(g(h(j(x))))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial j(x)} * \frac{\partial j(x)}{\partial x}$.
 -->
 
 # Backward Pass
