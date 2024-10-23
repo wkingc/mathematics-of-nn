@@ -1,0 +1,99 @@
+# Why Learn the Mathematics of Deep Learning?
+
+# 2024 Nobel Prize in Physics @nobel2024
+
+# Applications to the Oversight Mission
+
+# The Deep in Deep Learning
+
+- This presentation is deceptively named because for the sake of teaching I will focus on so-called Shallow Neural Networks with fewer than two layers.  However, the concepts herein extrapolate to Deep Neural Networks.
+
+# Preliminaries
+
+# Matricies
+
+# Matrix Translation
+
+# Matrix Transformation
+
+# Matrix Transformation:  Scale
+
+# Matrix Transformation:  Rotation
+
+# Rate of Change:  The Derivative
+
+- I am going to spare you the details of how to take a derivative because it's the intuitive piece that matters.
+- The derivative is the slope of the line that just touch the point, also called a tangent line.  
+- The plot shows the derivative of the parabola at (0.5, 0.25) and (0,0).
+    - The rate or change or slope of the line at (0.5, 0.25) is 1.
+    - The rate or change or slope of the line at (0,0) is 0, which is the minimum of the parabola.
+
+# Rate of Change: The Gradient
+
+- Imagine climbing a hill at the yellow star.
+    - There is the slope going up the hill which is the slope in the y-direction.
+    - There is the slope going side-to-side on the hill which is the slope in the x-direction
+- At the top of the hill, the gradient is zero because there is no more up-down or side-to-side change.
+
+# Deep Learning Intuition I
+
+# Deep Learning Intuition II
+
+# Deep Learning Roadmap:  Layers
+
+- This is called a shallow neural network because it has only two layers.  A neural network is said to be _deep_ if is has more than two layers @berner2021modern.
+
+# Representation of a Single-Layer Neural Network
+
+# Representation of a Two-Layer Neural Network
+
+# What Is $\varrho(h)$ and Why Do We Need It?
+
+# Rectified Linear Unit (ReLU)
+
+# Deep Learning Roadmap:  Loss
+
+# Measures of Loss
+
+# Forward Pass I
+
+# Forward Pass II
+
+- Example from:  https://towardsdatascience.com/training-a-neural-network-by-hand-1bcac4d82a6e.
+- I hear in my mind from everyone who has taken Calculus:  You don't have to do this numerically, just take the derivative of the loss function, set it equal to zero, and solve!  While straw man in my mind is correct in this very simple example, for more complicated neural networks, analytic solutions are not forthcoming.
+- Obviously this isn't a great fit because we randomly choose the values of W and B, so next we will discuss how to update them to make the model fit better!
+
+# Deep Learning Roadmap:  Optimization
+
+# Gradient Descent II
+
+- In this example, our initial value of W is -0.5, and at this point the rate of change is -1.  After updating W, the new value is -0.2, and at this point the rate of change is -0.4.
+- This step-down behavior is characteristic of a gradient descent algorithm.
+- Alpha is the learning rate.  In more complex cases where there may be many minimums, setting this parameter can prevent the algorithm from getting stuck at a local minimum instead of the absolute minimum.
+
+# A Note About Calculating Gradients
+
+- Backpropagation is an elegant solution to a difficult problem that deserves more attentions than this.  We will likely have a follow-on to this presentation that is devoted to this methdo.
+
+# Backward Pass
+
+# A Real Example:  Digit Image Classification
+
+# A Real Example:  Data Setup
+
+# A Real Example:  Model Setup
+
+# A Real Example:  Model Compilation
+
+- Sparse categorical cross entropy is a measure of loss for categorical data.
+- RMSprop is a special form of gradient descent that includes _momentum_ to prevent the algorithm from getting stuck at a local minima.
+- Accuracy is the percentage of accurately classified images.
+
+# A Real Example:  Model Fit
+
+- Overfitting:  where machine learning models tend to perform worse on new data than the data they were trained on.
+- As a aside, this model using the MNIST data is better at the task of identifying handwritten digits than humans who are only correct about 90% of the time.
+
+# Summary
+
+# References {.allowframebreaks}
