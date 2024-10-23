@@ -20,6 +20,8 @@
 
 # Matrix Transformation:  Rotation
 
+- A "radian" and a "degree" are both units used to measure angles, but a radian is defined based on the ratio of an arc length to the radius of a circle, while a degree is one of 360 equal parts of a full circle.
+
 # Rate of Change:  The Derivative
 
 - I am going to spare you the details of how to take a derivative because it's the intuitive piece that matters.
