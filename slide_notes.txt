@@ -1,16 +1,40 @@
+- Overall I need to ground the math in real life use cases.
+- Translate why the audience cares about this in the OIG perspective.
+- Jargon that vendors that might use.  Just matrix math and derivatives at the end of the day.
+- At the end ask the question why now?  How long ago was actualy framework created.  Compute and data.
+- Topics haven't during addressed:  Bias
+- Facial recognition for crime
+- Hullucinations in Neural Network
+- How to choose number of layers and neurons per layer.  Also stop condition for optimization.
+- Does number of layers matter to an auditor?
+- Adversarial attacks on models
+- Policy vs. Ethics:  This is about not math, not policy or ethics, but knowing the math can help drive policy and ethics.
+- Math looking at edges.  Looking at edges of car instead patterns of dots and pictures.
+- Explainable AI.
+- Preparing data is a big deal.  What is the data trained on and how that that effect generalizability?  Silicon valley resumes.
+- Any time relate it back to a real world idea.  Important for them to hear the words.  Going down a hill.  Stick figure walking down a graph.  Anything that can be more graspable.
+- This is a good demonstration of lay speak to get people to understand the mathematical part.  
+
 # Why Learn the Mathematics of Deep Learning?
+
+I see it as internal uses of AI vs doing oversight of AI.
 
 # 2024 Nobel Prize in Physics @nobel2024
 
 # Applications to the Oversight Mission
 
-# The Deep in Deep Learning
+Move information in this slide to slide 2 (# Why Learn the Mathematics of Deep Learning?).
+Using AI for OIG work and overseeing agency AI models.
 
-- This presentation is deceptively named because for the sake of teaching I will focus on so-called Shallow Neural Networks with fewer than two layers.  However, the concepts herein extrapolate to Deep Neural Networks.
+# The Deep in Deep Learning
 
 # Preliminaries
 
+Can this be said instead?
+
 # Matricies
+
+State oraly why we care about matricies.  A matrix is how data are stored.
 
 # Matrix Translation
 
@@ -20,40 +44,42 @@
 
 # Matrix Transformation:  Rotation
 
-- A "radian" and a "degree" are both units used to measure angles, but a radian is defined based on the ratio of an arc length to the radius of a circle, while a degree is one of 360 equal parts of a full circle.
+Just show in pictures instead of show matrix?
 
 # Rate of Change:  The Derivative
 
-- I am going to spare you the details of how to take a derivative because it's the intuitive piece that matters.
-- The derivative is the slope of the line that just touch the point, also called a tangent line.  
-- The plot shows the derivative of the parabola at (0.5, 0.25) and (0,0).
-    - The rate or change or slope of the line at (0.5, 0.25) is 1.
-    - The rate or change or slope of the line at (0,0) is 0, which is the minimum of the parabola.
-
 # Rate of Change: The Gradient
 
-- Imagine climbing a hill at the yellow star.
-    - There is the slope going up the hill which is the slope in the y-direction.
-    - There is the slope going side-to-side on the hill which is the slope in the x-direction
-- At the top of the hill, the gradient is zero because there is no more up-down or side-to-side change.
+8 slides on the math.  Seems like a lot of math.  Great stuff on math but too much.
+
+Say exactly at the beginning why the math is needed and then move through it relatively quickly.  Won't be banboozeld by other people.
 
 # Deep Learning Intuition I
+
+Associate real life example with the picture in the slide.
 
 # Deep Learning Intuition II
 
 # Deep Learning Roadmap:  Layers
 
-- This is called a shallow neural network because it has only two layers.  A neural network is said to be _deep_ if is has more than two layers @berner2021modern.
-
 # Representation of a Single-Layer Neural Network
+
+Say the X could be a number -- anything with a mathematical representation.  Pixel image, numerical representation of a sound, ect.
 
 # Representation of a Two-Layer Neural Network
 
 # What Is $\varrho(h)$ and Why Do We Need It?
 
+Rework this slide:  Remove proof
+Detect non-linear features
+
 # Rectified Linear Unit (ReLU)
 
+Additional mathematical steps to get more accurate.  Detect non-linear features.
+
 # Deep Learning Roadmap:  Loss
+
+- Just call it loss, not loss function.
 
 # Measures of Loss
 
@@ -61,23 +87,23 @@
 
 # Forward Pass II
 
-- Example from:  https://towardsdatascience.com/training-a-neural-network-by-hand-1bcac4d82a6e.
-- I hear in my mind from everyone who has taken Calculus:  You don't have to do this numerically, just take the derivative of the loss function, set it equal to zero, and solve!  While straw man in my mind is correct in this very simple example, for more complicated neural networks, analytic solutions are not forthcoming.
-- Obviously this isn't a great fit because we randomly choose the values of W and B, so next we will discuss how to update them to make the model fit better!
+- Use english to explain.  X are the inputs.  What is X?  X is a mathmetical represetnation of a sound byte, image.
 
 # Deep Learning Roadmap:  Optimization
 
-# Gradient Descent II
+# Gradient Descent I
 
-- In this example, our initial value of W is -0.5, and at this point the rate of change is -1.  After updating W, the new value is -0.2, and at this point the rate of change is -0.4.
-- This step-down behavior is characteristic of a gradient descent algorithm.
-- Alpha is the learning rate.  In more complex cases where there may be many minimums, setting this parameter can prevent the algorithm from getting stuck at a local minimum instead of the absolute minimum.
+- Think about a stick man walking down the curve
+
+# Gradient Descent II
 
 # A Note About Calculating Gradients
 
-- Backpropagation is an elegant solution to a difficult problem that deserves more attentions than this.  We will likely have a follow-on to this presentation that is devoted to this methdo.
+- Too many words.  Use an image instead.
 
 # Backward Pass
+
+- Model will be used to make a forecast from new data.  Detecting a pedestrian crossing the streed.
 
 # A Real Example:  Digit Image Classification
 
@@ -87,15 +113,11 @@
 
 # A Real Example:  Model Compilation
 
-- Sparse categorical cross entropy is a measure of loss for categorical data.
-- RMSprop is a special form of gradient descent that includes _momentum_ to prevent the algorithm from getting stuck at a local minima.
-- Accuracy is the percentage of accurately classified images.
-
 # A Real Example:  Model Fit
-
-- Overfitting:  where machine learning models tend to perform worse on new data than the data they were trained on.
-- As a aside, this model using the MNIST data is better at the task of identifying handwritten digits than humans who are only correct about 90% of the time.
 
 # Summary
 
+Tie back to slide 4 (applications to the oversight mission).  Tie it back to why they care.
+
 # References {.allowframebreaks}
+
