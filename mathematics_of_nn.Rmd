@@ -61,29 +61,29 @@ knitr::include_graphics("./images/nobel_nn.png", auto_pdf = TRUE)
     
 # The Deep in Deep Learning
 
-- Deep Learning always refers to Deep Neural Networks.  
-- A Deep Neural Network is a Neural Network with more than two layers.
+- Deep learning always refers to deep neural networks.  
+- A deep neural network is a neural network with more than two layers.
 - ChatGPT Version 4 is reported to have 1.8 trillion parameters across 120 layers @gptleak!
 
 <!--
-This presentation is deceptively named because for the sake of teaching I will focus on so-called Shallow Neural Networks with fewer than two layers.  However, the concepts herein extrapolate to Deep Neural Networks.
+- This presentation is deceptively named because for the sake of teaching I will focus on so-called Shallow Neural Networks with fewer than two layers.  However, the concepts herein extrapolate to Deep Neural Networks.
 -->
 
 # Preliminaries
 
-- This presentation is aimed at the someone who wants to learn about Deep Learning without having a background in sophisticated mathematics.
-- We briefly introduce some concepts from _Linear Algebra_ and _Differential Calculus_, but will focus on an intuitive understanding.
+- This presentation is aimed at the someone who wants to learn about deep learning without having a background in sophisticated mathematics.
+- We briefly introduce some concepts from _linear algebra_ and _differential calculus_, but will focus on an intuitive understanding.
 
 # Matricies
 
-- A matrix is a grid of numbers with $N$ rows and $P$ columns denoted $X_{N \times P}$.
+- A _matrix_ is a grid of numbers with $N$ rows and $P$ columns denoted $X_{N \times P}$.
     - $X_{2 \times 2} = \begin{bmatrix} x_1 & x_2 \\ x_3 & x_4 \end{bmatrix}$ is a $2 \times 2$ matrix.
     - $X_{1 \times 1} = \begin{bmatrix} x_1 \end{bmatrix}$ is a $1 \times 1$ matrix, also called a _scalar_.
     - $X_{1 \times 2} = \begin{bmatrix} x_1 & x_2 \end{bmatrix}$ is a $1 \times 2$ matrix, also called a _vector_.
 
 # Matrix Translation
 
-- Matrix translation is the addition/subtraction of a constant to every element of a matrix.
+- _Matrix translation_ is the addition/subtraction of a constant to every element of a matrix.
     - The columns of $X_{2 \times 6} = \begin{bmatrix} 0 & 0 & 1 & 1 & 0 & 0 \\  0 & 1 & 1 & 0 & 0 & 1 \end{bmatrix}$ describe a square in 2-dimensional space.  We can translate the square by $0.2$ units by adding $0.2$ to each element of $X_{2 \times 6}$.
 
 ```{python matrixTranslation, eval = TRUE, echo = FALSE}
@@ -115,7 +115,7 @@ knitr::include_graphics("./images/translation.png")
 
 # Matrix Transformation
 
-- Matrix transformation is achieved through the matrix-specific operation called the _dot product_ where the rows of $X$ and the columns of $Y$ are multiplied and summed.
+- _Matrix transformation_ is achieved through the matrix-specific operation called the _dot product_ where the rows of $X$ and the columns of $Y$ are multiplied and summed.
     - The dot product of $X_{1 \times 2} \cdot Y_{2 \times 1} = \begin{bmatrix} x_1 & x_2 \end{bmatrix} \cdot \begin{bmatrix} y_1 \\ y_2 \end{bmatrix} = \begin{bmatrix} x_1 y_1 + x_2 y_2 \end{bmatrix}$
     - If the number of columns in $X$ does not equal the number of rows in $Y$ then the dot product operation is not defined.
     - The size of the resulting matrix is equal to the number of rows in $X$ and the number of columns in $Y$.
@@ -191,7 +191,7 @@ knitr::include_graphics("./images/rotation.png")
 ```
 
 <!--
-A "radian" and a "degree" are both units used to measure angles, but a radian is defined based on the ratio of an arc length to the radius of a circle, while a degree is one of 360 equal parts of a full circle, making a radian significantly larger than a degree; essentially, radians are a more mathematically natural unit, while degrees are more convenient for everyday use due to their familiar division system.
+- A "radian" and a "degree" are both units used to measure angles, but a radian is defined based on the ratio of an arc length to the radius of a circle, while a degree is one of 360 equal parts of a full circle.
 -->
 
 # Matris Transformation:  Affine
@@ -232,7 +232,7 @@ knitr::include_graphics("./images/affine.png")
 
 # Rate of Change:  The Derivative
 
-- A derivative measures the rate of change or slope at any point denoted by $\frac{\partial y}{\partial x}$, which is read "the change in $y$ with respect to the change in $x$."
+- A _derivative_ measures the rate of change or slope at any point denoted by $\frac{\partial y}{\partial x}$, which is read "the change in $y$ with respect to the change in $x$."
 
 ```{python derivative, eval = TRUE, echo = FALSE}
 x = sym.symbols("x")
@@ -271,7 +271,7 @@ knitr::include_graphics("./images/derivative.png")
 
 <!--
 - I am going to spare you the details of how to take a derivative because it's the intuitive piece that matters.
-- The derivative is the slope of the line just touch the point, also called a tangent line.  
+- The derivative is the slope of the line that just touch the point, also called a tangent line.  
 - The plot shows the derivative of the parabola at (0.5, 0.25) and (0,0).
     - The rate or change or slope of the line at (0.5, 0.25) is 1.
     - The rate or change or slope of the line at (0,0) is 0, which is the minimum of the parabola.
@@ -279,7 +279,7 @@ knitr::include_graphics("./images/derivative.png")
 
 # Rate of Change: The Gradient
 
-- The gradient is a generalization of the derivative that measures the rate of change or slope in every direction.  For example, if we have the surface $z = x^2 + y^2$ the slope in the $x$ direction is $\frac{\partial z}{\partial x} = 2x$ and the slope in the $y$ direction is $\frac{\partial z}{\partial y} = 2y$.
+- The _gradient_ is a generalization of the derivative that measures the rate of change or slope in every direction.  For example, if we have the surface $z = x^2 + y^2$ the slope in the $x$ direction is $\frac{\partial z}{\partial x} = 2x$ and the slope in the $y$ direction is $\frac{\partial z}{\partial y} = 2y$.
 
 ```{python gradient, eval = TRUE, echo = FALSE}
 x, y = sym.symbols('x y')
@@ -330,7 +330,7 @@ knitr::include_graphics("./images/gradient.png")
 
 # Deep Learning Intuition I
 
-- A Neural Network is an information sieve that takes as input the outcomes, and the features we want to use to predict the outcomes @chollet2021deep.
+- A neural network is an information sieve that takes as input the outcomes, and the features we want to use to predict the outcomes @chollet2021deep.
 - At the top of the sieve is the most granular representation of the data, and for each successive layer down, the data becomes more and more refined, that is, better at predicting the outcome @chollet2021deep.
 
 ```{r sieve, echo = FALSE, dpi = 300, fig.align = "center", results = 'asis'}
@@ -339,7 +339,7 @@ knitr::include_graphics("./images/sieve.png", auto_pdf = TRUE)
 
 # Deep Learning Intuition II
 
-- Consider a blue and red piece of paper crumpled together and your goal is to uncrumple them.  Each movement of your fingers to uncrumple the papers is like a layer of a Neural Network, until finally at the last layer the colors are fully separated @chollet2021deep.
+- Consider a blue and red piece of paper crumpled together and your goal is to uncrumple them.  Each movement of your fingers to uncrumple the papers is like a layer of a neural network, until finally at the last layer the colors are fully separated @chollet2021deep.
 
 ```{r paper, echo = FALSE, dpi = 400, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/paper.PNG", auto_pdf = TRUE)
@@ -347,7 +347,7 @@ knitr::include_graphics("./images/paper.PNG", auto_pdf = TRUE)
 
 # Deep Learning Roadmap:  Layers
 
-- The full process of fitting a Neural Network is shown below.  As a first step, we will explain the mathematical representation of the layers @chollet2021deep.
+- The full process of fitting a neural network is shown below.  As a first step, we will explain the mathematical representation of the layers @chollet2021deep.
 
 ```{r deepLearningLayers, echo = FALSE, dpi = 400, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/deep_learning_layers.PNG", auto_pdf = TRUE)
@@ -359,7 +359,7 @@ knitr::include_graphics("./images/deep_learning_layers.PNG", auto_pdf = TRUE)
 
 # Representation of a Single-Layer Neural Network
 
-- A single layer Neural Network is represented by the affine transformation $Y = W \cdot X + B$ @berner2021modern.
+- A single layer neural network is represented by the affine transformation $Y = W \cdot X + B$ @berner2021modern.
 
 ```{python singleLayer, eval = TRUE, echo = FALSE}
 G = nx.DiGraph([("$x_3$", "y"), ("$x_2$", "y"), ("$x_1$", "y")])
@@ -397,7 +397,7 @@ knitr::include_graphics("./images/one_layer.png")
 
 # Representation of a Two-Layer Neural Network
 
-- A two layer Neural Network includes a layer of _neurons_ between the features and the outcome.  These are called _hidden neurons_ because they are not observed in the input data @berner2021modern.
+- A two layer neural network includes a layer of _neurons_ between the features and the outcome.  These are called _hidden neurons_ because they are not observed in the input data @berner2021modern.
 
 ```{python twoLayer, eval = TRUE, echo = FALSE}
 G = nx.DiGraph([
@@ -446,8 +446,8 @@ knitr::include_graphics("./images/two_layer.png")
 
 # What Is $\varrho(h)$ and Why Do We Need It?
 
-- The function $\varrho(h)$ is a non-linear transformation applied to the otherwise linear affine transformation @berner2021modern.
-- A two-layer Neural Network without a non-linear transformation between layers is a single-layer neural network in disguise @chollet2021deep!
+- The function $\varrho(h)$ is a non-linear transformation applied to the otherwise linear affine transformation, also called an _activation function_ @berner2021modern.
+- A two-layer neural network without a non-linear transformation between layers is a single-layer neural network in disguise @chollet2021deep!
 
 \begin{equation*}
 \begin{split}
@@ -498,7 +498,7 @@ knitr::include_graphics("./images/relu.png")
 
 # Deep Learning Roadmap:  Loss
 
-- After a Neural Network is fit, we need a way to measure how good it is at predicting the target or _outcome_ of interest.  This is called the _loss function_ @chollet2021deep.
+- After a neural network is fit, we need a way to measure how good it is at predicting the outcome of interest.  This is called the _loss function_ @chollet2021deep.
 
 ```{r deepLearningLoss, echo = FALSE, dpi = 400, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
@@ -506,7 +506,7 @@ knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
 
 # Measures of Loss
 
-- For a numeric outcome a common measure of loss is the _Mean Squared Error_, which measures the average of the squared deviations from the observed outcomes and our predictions of them @fox2008applied.
+- For a numeric outcome a common measure of loss is the _mean squared error_, which measures the average of the squared deviations from the observed outcomes and our predictions of them @fox2008applied.
 
 \begin{equation*}
 e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2
@@ -516,7 +516,7 @@ e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2
 
 # Forward Pass I
 
-- Consider the most basic of Neural Networks, a single feature used to predict a single outcome.
+- Consider the most basic of neural networks, a single feature used to predict a single outcome.
 - The _forward pass_ calculates the predictions of the outcome from the input data using the values of $W$ and $B$ @chollet2021deep.
 
 ```{python simplenn, eval = TRUE, echo = FALSE}
@@ -544,7 +544,7 @@ if not one_layer.is_file():
     _ = nx.draw_networkx(G, pos, **options)
     _ = plt.margins(0.05, 0.1)
     _ = plt.axis("off")
-    _ = plt.text(0.3, 0.001, "$Y_{1 \\times N} = W^{(1)}_{1 \\times 3} \\cdot X_{3 \\times N} + B^{(1)}_{1 \\times 1}$", fontsize = 35, bbox = dict(boxstyle = "round", facecolor = "wheat", alpha=1))
+    _ = plt.text(0.3, 0.001, "$Y_{1 \\times N} = W^{(1)}_{1 \\times 1} \\cdot X_{1 \\times N} + B^{(1)}_{1 \\times 1}$", fontsize = 35, bbox = dict(boxstyle = "round", facecolor = "wheat", alpha=1))
     _ = plt.savefig("./images/simple_nn.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
 ```
@@ -556,8 +556,8 @@ knitr::include_graphics("./images/simple_nn.png")
 # Forward Pass II
 
 - Let $Y = \begin{bmatrix} 0.2 & 0.25 & 0.4 & 0.7 \end{bmatrix}$, $X = \begin{bmatrix} 0.1 & 0.3 & 0.6 & 0.7 \end{bmatrix}$,  $W = \begin{bmatrix} 0.5 \end{bmatrix}$, $B = \begin{bmatrix} 0 \end{bmatrix}$.
-- The initial predictions from the first _forward pass_ are $Y^{\prime} = \begin{bmatrix} 0.5 \end{bmatrix} \cdot \begin{bmatrix} 0.2 & 0.25 & 0.4 & 0.7 \end{bmatrix} + \begin{bmatrix} 0 \end{bmatrix} = \begin{bmatrix} 0.05 & 0.15 & 0.3 & 0.35 \end{bmatrix}$.
-- The calculated loss is $e(w,b) = \frac{1}{4}((0.2 - 0.05)^2 + (0.25 - 0.15)^2 + (0.4 - 0.3)^2 + (0.7 - 0.35)^2) = 0.0825$.
+- The initial predictions from the first forward pass are $Y^{\prime} = W \cdot X + B = \begin{bmatrix} 0.5 \end{bmatrix} \cdot \begin{bmatrix} 0.2 & 0.25 & 0.4 & 0.7 \end{bmatrix} + \begin{bmatrix} 0 \end{bmatrix} = \begin{bmatrix} 0.05 & 0.15 & 0.3 & 0.35 \end{bmatrix}$.
+- The calculated loss using the MSE is $e = \frac{1}{4}((0.2 - 0.05)^2 + (0.25 - 0.15)^2 + (0.4 - 0.3)^2 + (0.7 - 0.35)^2) = 0.0412$.
 
 # Forward Pass III
 
@@ -589,9 +589,9 @@ knitr::include_graphics("./images/forwardp.png")
 ```
 
 <!--
-Example from:  https://towardsdatascience.com/training-a-neural-network-by-hand-1bcac4d82a6e.
-
-Obviously this isn't a great fit, so next we will discuss how to make it better!
+- Example from:  https://towardsdatascience.com/training-a-neural-network-by-hand-1bcac4d82a6e.
+- I hear in my mind from everyone who has taken Calculus:  You don't have to do this numerically, just take the derivative of the loss function, set it equal to zero, and solve!  While straw man in my mind is correct in this very simple example, for more complicated neural networks, analytic solutions are not forthcoming.
+- Obviously this isn't a great fit because we randomly choose the values of W and B, so next we will discuss how to update them to make the model fit better!
 -->
 
 # Deep Learning Roadmap:  Optimization
@@ -629,7 +629,7 @@ if not gradient_descent_title.is_file():
     plt.close("all")
 ```
 
-```{r gradientDescentTitleImage, echo = FALSE, dpi = 900, fig.align = "center", results = 'asis'}
+```{r gradientDescentTitleImage, echo = FALSE, dpi = 950, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/gradient_descent_title.png", auto_pdf = TRUE)
 ```
 
@@ -657,7 +657,7 @@ updatew = Path("./images/updatew.png")
 
 if not updatew.is_file():
     plt.clf()
-    _ = plt.title("$W_{u}$ if the Learning Rate is 0.3")
+    _ = plt.title("$e = w^2$ and $\\frac{\partial e}{\partial w} = 2w$: $w_{u}$ if the Learning Rate is 0.3")
     _ = plt.axis((-0.8, 0.8, -0.01, 0.5))
     _ = plt.plot(x_num, y_num, color = "black")
     _ = plt.axline((-0.5, y_f(-0.5)), slope = dy_f(-0.5), color = "blue")
@@ -686,13 +686,13 @@ knitr::include_graphics("./images/updatew.png")
 
 # A Note About Calculating Gradients
 
-- In the previous slides we made the assumption that calculating the gradient of a loss function is easy, but for Neural Networks with many layers and thousands of parameters, this is not true.
+- In the previous slides we made the assumption that calculating the gradient of a loss function is easy, but for neural networks with many layers and thousands of parameters, this is not true.
 - The problem of efficiently calculating the gradient is solved using _backpropagation_.
-    - Backpropagation works by chaining together the gradients of very simple expressions, like the affine transformations that define each layer of a Neural Network, to derive the gradient of a very complicated expression like the MSE.
-    - All of the individual gradients taken together have the appearance of being taped together across the computations of a Neural Network, which is why backpropagation is sometimes called _gradient tape_.
+    - Backpropagation works by chaining together the gradients of very simple expressions that are part of the computation graph of a neural network to calculate the otherwise very complicated gradient for the entire neural network.
+    - All of the individual gradients taken together have the appearance of being taped together across the computation graph of a neural network, which is why backpropagation is sometimes called _gradient tape_.
 
 <!--
-- The nerdy side of me really wishes I could spend more time on this topic.  Backpropagation is an elegant solution to a difficult problem that deserves more attentions than this.
+- Backpropagation is an elegant solution to a difficult problem that deserves more attentions than this.  We will likely have a follow-on to this presentation that is devoted to this methdo.
 
 - If we have two functions $f(x)$ and $g(x)$ and we want to calculate $\frac{\partial f(g(x))}{\partial x}$ the chain rule states $\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial x}$.
 - If we have three functions $f(x)$, $g(x)$, $h(x)$ and we want to calculate $\frac{\partial f(g(h(x)))}{\partial x}$ the chain rules statues that $\frac{\partial f(g(h(x)))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial x}$.
@@ -702,7 +702,7 @@ knitr::include_graphics("./images/updatew.png")
 # Backward Pass
 
 - Adjusting the values of $W$ and $B$ using gradient descent is called is called a _backward pass_ @chollet2021deep.
-- Each cycle of a _forward pass_ followed by a _backward pass_ is called an _epoch_ @chollet2021deep.
+- Each cycle of a forward pass followed by a backward pass is called an _epoch_ @chollet2021deep.
 
 ```{python backwardPass, eval = TRUE, echo = FALSE, results = FALSE}
 def Merge(dict1, dict2):
@@ -795,7 +795,7 @@ knitr::include_graphics("./images/epoch100.png")
 
 # A Real Example:  Digit Image Classification
 
-- One of the best use cases for Neural Networks is image classification.
+- One of the best use cases for neural networks is image classification.
 - We will use the MNIST data set that is 70,000 images of hand-written digits 0-9 that are 28x28 pixels @chollet2015keras.  
 
 ```{python mnist, eval = TRUE, echo = FALSE, results = FALSE}
@@ -834,8 +834,8 @@ test_images = test_images.reshape((10000, 28 * 28))
 
 # A Real Example:  Model Setup
 
--  The first layer of the Neural Network contains 512 hidden neurons and uses the ReLU activation function.
--  The output layer of the Neural Network is a 10-way Softmax classification layer that returns the probability that each digit belongs to a specific class. \newline
+-  The first layer of the neural network contains 512 hidden neurons and uses the ReLU activation function.
+-  The output layer of the neural network is a 10-way Softmax classification layer that returns the probability that each digit belongs to a specific class. \newline
 
 ```{python mnistModelSetup, eval = TRUE, echo = TRUE, results = TRUE, size = "scriptsize"}
 from tensorflow import keras 
@@ -849,8 +849,8 @@ model = keras.Sequential([
 
 # A Real Example:  Model Compilation
 
-- The __loss__ argument specifies how the model loss is calculated at the end of each _forward pass_.
-- The __optimizer__ argument specifics the optimization algorithm used to update the parameter values for the _backward pass_.
+- The __loss__ argument specifies how the model loss is calculated at the end of each forward pass.
+- The __optimizer__ argument specifics the optimization algorithm used to update the parameter values for the backward pass.
 - The __metric__ argument specifics how we will assess the model performance. \newline
 
 ```{python mnistModelCompilation, eval = TRUE, echo = TRUE, results = TRUE, size = "scriptsize"}
@@ -863,6 +863,7 @@ model.compile(
 <!-- 
 - Sparse categorical cross entropy is a measure of loss for categorical data.
 - RMSprop is a special form of gradient descent that includes _momentum_ to prevent the algorithm from getting stuck at a local minima.
+- Accuracy is the percentage of accurately classified images.
 -->
 
 # A Real Example:  Model Fit
@@ -883,16 +884,16 @@ test_acc
 
 <!--
 - Overfitting:  where machine learning models tend to perform worse on new data than the data they were trained on.
-- As a aside, this model using the MNIST data is better at the task of identifying handwritten digits than humans who are only correct 90% of the time.
+- As a aside, this model using the MNIST data is better at the task of identifying handwritten digits than humans who are only correct about 90% of the time.
 -->
 
 # Summary
 
 - This presentation peeled back the layers of what appears to be the _magic_ of deep learning.
-    - We discussed how _layers_ in a Neural Network are like sieves for creating increasingly purified information.
-    - We showed that the mathematical representation of each layer is just a combination of translation and transformation.
+    - We discussed how _layers_ in a neural network are like sieves for creating increasingly purified information.
+    - We showed that the mathematical representation of each layer is just a combination of _matrix translation_ and _matrix transformation_.
     - We explained that the purpose of the _activation function_ applied to each layer is to detect non-linearity in the output function.
     - We showed how after each _forward pass_ from the input to the output of the model, how the parameters in each layer are updated in the _backward pass_ using _gradient descent_ and _backpropagation_.
-    - We concluded by presenting an example of fitting a Neural Network model using real data in Python.
+    - We concluded by presenting an example of fitting a neural network model using real data.
 
 # References {.allowframebreaks}
