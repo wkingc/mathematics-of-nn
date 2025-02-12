@@ -40,25 +40,10 @@ import sympy as sym
 import networkx as nx
 import pandas as pd
 from PIL import Image
-from tensorflow.keras.datasets import mnist
 ```
 
 \emph{\Large Learning the math behind a statistical method is like learning the secret to a magic trick.  Once you know the math, you can never be fooled by the same trick again.}
 
-# 2024 Nobel Prize in Physics @nobel2024
-
-```{r nobelImage, echo = FALSE, dpi = 550, fig.align = "center", results = 'asis'}
-knitr::include_graphics("./images/nobel_nn.png", auto_pdf = TRUE)
-```
-
-# Applications to the Oversight Mission
-
-- Each IG is responsible for the oversight of agencies that will implement deep learning to make more informed and better decisions, but come with risks such as bias, privacy, lack of transparency, and ethical complexities.
-- Each OIG will use deep leaning to provide better oversight.
-    - Auditors will use deep learning to write better recommendations based on data about how clients responded to previous recommendations.
-    - Evaluators will use deep learning to find evidence of systemic problems in large volumes of data.
-    - Investigators will use deep learning to find leads based on patterns observed their case data.
-    
 # The Deep in Deep Learning
 
 - Deep learning always refers to deep neural networks.  
@@ -66,7 +51,7 @@ knitr::include_graphics("./images/nobel_nn.png", auto_pdf = TRUE)
 - ChatGPT Version 4 is reported to have 1.8 trillion parameters across 120 layers @gptleak!
 
 <!--
-- This presentation is deceptively named because for the sake of teaching I will focus on so-called Shallow Neural Networks with fewer than two layers.  However, the concepts herein extrapolate to Deep Neural Networks.
+- This presentation is deceptively named because I will focus on shallow neural networks with two or fewer layers, however the same concepts apply to deeper networks. 
 -->
 
 # Preliminaries
@@ -80,11 +65,19 @@ knitr::include_graphics("./images/nobel_nn.png", auto_pdf = TRUE)
     - $X_{2 \times 2} = \begin{bmatrix} x_1 & x_2 \\ x_3 & x_4 \end{bmatrix}$ is a $2 \times 2$ matrix.
     - $X_{1 \times 1} = \begin{bmatrix} x_1 \end{bmatrix}$ is a $1 \times 1$ matrix, also called a _scalar_.
     - $X_{1 \times 2} = \begin{bmatrix} x_1 & x_2 \end{bmatrix}$ is a $1 \times 2$ matrix, also called a _vector_.
+    
+<!--
+A matrix can be thought of as a container for data.  For example, suppose we have data on arrests.  A vector of zeros and ones could indicate if an arrest was made.  To predict arrests we would have a matrix that contains features such as economic conditions and sociodemgraphic factors.
+-->
 
 # Matrix Translation
 
 - _Matrix translation_ is the addition/subtraction of a constant to every element of a matrix.
     - The columns of $X_{2 \times 6} = \begin{bmatrix} 0 & 0 & 1 & 1 & 0 & 0 \\  0 & 1 & 1 & 0 & 0 & 1 \end{bmatrix}$ describe a square in 2-dimensional space.  We can translate the square by $0.2$ units by adding $0.2$ to each element of $X_{2 \times 6}$.
+    
+<!--
+- While it's obviously connived for the purpose of illustration, we can think of the rows of $X$ as being features, that taken together form a square in 2-dimensional space.
+-->
 
 ```{python matrixTranslation, eval = TRUE, echo = FALSE}
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
@@ -96,6 +89,8 @@ translation = Path("./images/translation.png")
 
 if not translation.is_file():
     plt.clf()
+    _ = plt.grid(False)
+    _ = plt.figure(facecolor='white')
     _ = plt.title("Translation of 0.2 Units")
     _ = plt.plot(X[0, :], X[1, :], color = "black", alpha = 0.5)
     _ = plt.plot(Ztrans[0, :], Ztrans[1, :], color = "red", alpha = 0.5)
@@ -117,8 +112,12 @@ knitr::include_graphics("./images/translation.png")
 
 - _Matrix transformation_ is achieved through the matrix-specific operation called the _dot product_ where the rows of $X$ and the columns of $Y$ are multiplied and summed.
     - The dot product of $X_{1 \times 2} \cdot Y_{2 \times 1} = \begin{bmatrix} x_1 & x_2 \end{bmatrix} \cdot \begin{bmatrix} y_1 \\ y_2 \end{bmatrix} = \begin{bmatrix} x_1 y_1 + x_2 y_2 \end{bmatrix}$
-    - If the number of columns in $X$ does not equal the number of rows in $Y$ then the dot product operation is not defined.
-    - The size of the resulting matrix is equal to the number of rows in $X$ and the number of columns in $Y$.
+    - The dot product allows us to _scale_ and _rotate_ the feature matrix.
+    
+<!--
+- If the number of columns in $X$ does not equal the number of rows in $Y$ then the dot product operation is not defined.
+- The size of the resulting matrix is equal to the number of rows in $X$ and the number of columns in $Y$.
+-->
 
 # Matrix Transformation:  Scale
 
@@ -134,10 +133,12 @@ W = np.array([
 Zscale = np.dot(W, X)
 Z = Zscale - X
 
-scale = Path("./mathematics_of_nn/images/scale.png")
+scale = Path("./images/scale.png")
 
 if not scale.is_file():
     plt.clf()
+    _ = plt.grid(False)
+    _ = plt.figure(facecolor='white')
     _ = plt.title("50% Scale")
     _ = plt.plot(X[0, :], X[1, :], color = "black", alpha = 0.5)
     _ = plt.plot(Zscale[0, :], Zscale[1, :], color = "red", alpha = 0.5)
@@ -173,6 +174,8 @@ rotation = Path("./images/rotation.png")
 
 if not rotation.is_file():
     plt.clf()
+    _ = plt.grid(False)
+    _ = plt.figure(facecolor='white')
     _ = plt.title("Rotation of -10 Degrees")
     _ = plt.plot(X[0, :], X[1, :], color = "black", alpha = 0.5)
     _ = plt.plot(Zrot[0, :], Zrot[1, :], color = "red", alpha = 0.5)
@@ -190,13 +193,13 @@ if not rotation.is_file():
 knitr::include_graphics("./images/rotation.png")
 ```
 
-<!--
-- A "radian" and a "degree" are both units used to measure angles, but a radian is defined based on the ratio of an arc length to the radius of a circle, while a degree is one of 360 equal parts of a full circle.
--->
-
 # Matris Transformation:  Affine
 
-- An affine transformation of $X_{2 \times 6}$ combines transformation and translation.  For example, combining the rotation transformation of $-10$ degrees and translation of $0.2$ units.
+- An _affine transformation_ of $X_{2 \times 6}$ combines _transformation_ and _translation_.  For example, combining the rotation transformation of $-10$ degrees and translation of $0.2$ units.
+
+<!--
+- We care about matrix translation and transformation because these simple operations are at the heart of deep learning and are used to create a set of features that do a good job of predicting the outcome @chollet2021deep.
+-->
 
 ```{python matrixAffine, eval = TRUE, echo = FALSE}
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
@@ -234,6 +237,18 @@ knitr::include_graphics("./images/affine.png")
 
 - A _derivative_ measures the rate of change or slope at any point denoted by $\frac{\partial y}{\partial x}$, which is read "the change in $y$ with respect to the change in $x$."
 
+<!--
+- I am going to spare you the details of how to take a derivative because it's the intuitive piece that matters.
+
+- The derivative is the slope of the line that just touches a point, also called a tangent line.  
+- The plot shows the derivative of the parabola at (0.5, 0.25) and (0,0).
+    - The rate of change or slope of the line at (0.5, 0.25) is 1.
+    - The rate of change or slope of the line at (0,0) is 0, which is the minimum of the parabola.
+    
+- We care about derivatives because they give us a way to find the minimum of a function by finding where the slope is decreasing from right to left and the derivative is zero.
+- This provides the basis for optimizing, for exampling finding the set of economic conditions and socioeconomic factors that minimize the number of arrests.
+-->
+
 ```{python derivative, eval = TRUE, echo = FALSE}
 x = sym.symbols("x")
 y = (x)**2
@@ -251,6 +266,8 @@ derivative = Path("./images/derivative.png")
 
 if not derivative.is_file():
     plt.clf()
+    _ = plt.grid(False)
+    _ = plt.figure(facecolor='white')
     _ = plt.title("The Rate of Change or Slope at Every Point on the Parabola $x^2$ is $2x$")
     _ = plt.axis((-0.75, 0.75, -0.01, 0.45))
     _ = plt.plot(x_num, y_num, color = "black")
@@ -269,17 +286,20 @@ if not derivative.is_file():
 knitr::include_graphics("./images/derivative.png")
 ```
 
-<!--
-- I am going to spare you the details of how to take a derivative because it's the intuitive piece that matters.
-- The derivative is the slope of the line that just touch the point, also called a tangent line.  
-- The plot shows the derivative of the parabola at (0.5, 0.25) and (0,0).
-    - The rate or change or slope of the line at (0.5, 0.25) is 1.
-    - The rate or change or slope of the line at (0,0) is 0, which is the minimum of the parabola.
--->
-
 # Rate of Change: The Gradient
 
 - The _gradient_ is a generalization of the derivative that measures the rate of change or slope in every direction.  For example, if we have the surface $z = x^2 + y^2$ the slope in the $x$ direction is $\frac{\partial z}{\partial x} = 2x$ and the slope in the $y$ direction is $\frac{\partial z}{\partial y} = 2y$.
+
+<!--
+- Imagine climbing a hill at the yellow star.
+    - There is the slope going up the hill which is the slope in the y-direction.
+    - There is the slope going side-to-side on the hill which is the slope in the x-direction.
+- At the top of the hill, the gradient is zero because there is no more up-down or side-to-side change.
+
+- Another useful mental image is imaging a flat surface (also called a plane) drawn under where you are standing.  The gradient is the slope of that surface in every direction.
+
+- In general a feature matrix might be very high dimensional, so graphical representations of the gradient won't be forthcoming.  As an aside, a flat surface in high dimensional space is called a hyperplane.
+-->
 
 ```{python gradient, eval = TRUE, echo = FALSE}
 x, y = sym.symbols('x y')
@@ -303,8 +323,9 @@ gradient = Path("./images/gradient.png")
 
 if not gradient.is_file():
     plt.clf()
-    fig = plt.figure()
+    fig = plt.figure(facecolor='white')
     ax = fig.add_subplot(111, projection='3d', computed_zorder=False)
+    _ = plt.grid(False)
     _ = ax.plot_surface(x_num, y_num, z_num, cmap=plt.cm.viridis, linewidth=0, antialiased=True, alpha = 0.8)
     _ = ax.view_init(-140, 60)
     _ = ax.scatter(0, 0, 0, c='red', s=75, marker = "^")
@@ -321,14 +342,11 @@ if not gradient.is_file():
 knitr::include_graphics("./images/gradient.png")
 ```
 
-<!--
-- Imagine climbing a hill at the yellow star.
-    - There is the slope going up the hill which is the slope in the y-direction.
-    - There is the slope going side-to-side on the hill which is the slope in the x-direction
-- At the top of the hill, the gradient is zero because there is no more up-down or side-to-side change.
--->
-
 # Deep Learning Intuition I
+
+<!--
+- With the preliminary math done we are ready to dive into neural networks.
+-->
 
 - A neural network is an information sieve that takes as input the outcomes, and the features we want to use to predict the outcomes @chollet2021deep.
 - At the top of the sieve is the most granular representation of the data, and for each successive layer down, the data becomes more and more refined, that is, better at predicting the outcome @chollet2021deep.
@@ -336,6 +354,11 @@ knitr::include_graphics("./images/gradient.png")
 ```{r sieve, echo = FALSE, dpi = 300, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/sieve.png", auto_pdf = TRUE)
 ```
+
+<!--
+- Let's go back to our example where we want to predict arrests.  The features of economic conditions and socioeconomic factors are extremely complex and multifaceted.  The goal of deep learning is to take this very complicated set of features and distill them into the data that is the best at predicting the outcome of an arrest or no arrest.
+- As an aside, one of the appealing aspects of neural networks is so-called automatic feature engineering, where it doesn't matter how complicated the set of input features is, the data distillation process refines the features into their most predictive form possible.
+-->
 
 # Deep Learning Intuition II
 
@@ -353,13 +376,14 @@ knitr::include_graphics("./images/paper.PNG", auto_pdf = TRUE)
 knitr::include_graphics("./images/deep_learning_layers.PNG", auto_pdf = TRUE)
 ```
 
-<!--
-- This is called a shallow neural network because it has only two layers.  A neural network is said to be _deep_ if is has more than two layers @berner2021modern.
--->
-
 # Representation of a Single-Layer Neural Network
 
 - A single layer neural network is represented by the affine transformation $Y = W \cdot X + B$ @berner2021modern.
+
+<!--
+- In this diagram we are mapping three features to a single outcome.  For example, we might be mapping income, sex, and race to arrests made.
+- W and B are called the weights and bias, respectively, which is just transformation and translation of the feature matrix into a form that allows us to best predict the outcome.  These are the learned values that we want to optimize (e.g., using the gradient we discuss previously) to help us make the best prediction of an arrest or no arrest.
+-->
 
 ```{python singleLayer, eval = TRUE, echo = FALSE}
 G = nx.DiGraph([("$x_3$", "y"), ("$x_2$", "y"), ("$x_1$", "y")])
@@ -398,6 +422,12 @@ knitr::include_graphics("./images/one_layer.png")
 # Representation of a Two-Layer Neural Network
 
 - A two layer neural network includes a layer of _neurons_ between the features and the outcome.  These are called _hidden neurons_ because they are not observed in the input data @berner2021modern.
+
+<!--
+- In this case, instead of mapping income, sex, and race directly to the outcome, we instead map them to a layer that is a sieve in the information distillation process described before.  The "purified" data are then mapped back to the outcome.
+- Each layer has its own independent set of weights.
+- Finally a sneaky little function called Rho enters at the second layer, which we will discuss next.
+-->
 
 ```{python twoLayer, eval = TRUE, echo = FALSE}
 G = nx.DiGraph([
@@ -446,21 +476,24 @@ knitr::include_graphics("./images/two_layer.png")
 
 # What Is $\varrho(h)$ and Why Do We Need It?
 
-- The function $\varrho(h)$ is a non-linear transformation applied to the otherwise linear affine transformation, also called an _activation function_ @berner2021modern.
-- A two-layer neural network without a non-linear transformation between layers is a single-layer neural network in disguise @chollet2021deep!
+- The original affine transformation that defined each layer is linear, meaning that the output falls along a line.
+- The function $\varrho(h)$, also called an _activation function_, is a special kind of transformation called a non-linear transformation that allows the layer to take on many forms that are not linear @berner2021modern.
+- Without an activation function between layers, a deep neural network is actually a single-layer neural network in disguise @chollet2021deep!
 
-\begin{equation*}
-\begin{split}
+<!--
+- Because the activation function is non-linear it allows us to model very complex data representations @chollet2021deep.
+
+- Proof that a two layer neural network without an activation function is a single layer neural network in disguise.  To convert the LaTeX below to an image put it here:  https://latex2image.joeraut.com/.
+
 Y_{1 \times N} = \\ 
 W^{(2)}_{1 \times 4} \cdot h^{(1)}_{4 \times N} + B^{(2)}_{1 \times 1} = \\
 W^{(2)}_{1 \times 4} \cdot (W^{(1)}_{4 \times 3} \cdot X_{3 \times N} + B^{(1)}_{1 \times 4}) + B^{(2)}_{1 \times 1} = \\
 (W^{(2)}_{1 \times 4} \cdot W^{(1)}_{4 \times 3}) \cdot X_{3 \times N} + (W^{(2)}_{1 \times 4} B^{(1)}_{1 \times 4} + B^{(2)}_{1 \times 1})
-\end{split}
-\end{equation*}
+-->
 
 # Rectified Linear Unit (ReLU)
 
-- A common $\varrho(h)$ is the _ReLU_ transformation which replaces all negative values with 0 @berner2021modern.
+- A common activation function is the _ReLU_ transformation which replaces all negative values with 0 @berner2021modern.
 
 ```{python matrixRelu, eval = TRUE, echo = FALSE}
 X = np.array([[0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1]])
@@ -479,6 +512,8 @@ relu = Path("./images/relu.png")
 
 if not affine.is_file():
     plt.clf()
+    _ = plt.grid(False)
+    _ = plt.figure(facecolor='white')
     _ = plt.title("ReLU Transformation")
     _ = plt.plot(X[0, :], X[1, :], color = "black", alpha = 0.5)
     _ = plt.plot(Zaffine[0, :], Zaffine[1, :], color = "red", alpha = 0.5)
@@ -498,7 +533,11 @@ knitr::include_graphics("./images/relu.png")
 
 # Deep Learning Roadmap:  Loss
 
-- After a neural network is fit, we need a way to measure how good it is at predicting the outcome of interest.  This is called the _loss function_ @chollet2021deep.
+- After a neural network is fit, we need a way to measure how good it is at predicting the outcome of interest.  This is called a _loss function_ @chollet2021deep.
+
+<!-- 
+- For example, suppose I know that the average height of men in the U.S. 5'9 and my height is 6'0, then absolute loss in the prediction accuracy for me is 1'0.
+-->
 
 ```{r deepLearningLoss, echo = FALSE, dpi = 400, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
@@ -512,12 +551,16 @@ knitr::include_graphics("./images/deep_learning_loss.PNG", auto_pdf = TRUE)
 e = \frac{1}{n}\sum_{i=1}^{n}(y - y^{\prime})^2
 \end{equation*}
 
+<!--
+- Going back to the same example, if I am 6'0 then the MSE for me is (5'9-6'0)^2 = 1.
+-->
+
 - There are many other measure of loss, such as _categorical cross entropy_, which can be used to measure loss when the outcome is categorical @chollet2021deep.
 
 # Forward Pass I
 
-- Consider the most basic of neural networks, a single feature used to predict a single outcome.
-- The _forward pass_ calculates the predictions of the outcome from the input data using the values of $W$ and $B$ @chollet2021deep.
+- Consider the most basic of neural networks, a single feature used to predict a single outcome. <!-- For example, Y could be the length of a slug and X the amount of slime is produces. -->
+- The _forward pass_ calculates the predictions of the outcome from the input data using the values of $W$ and $B$ @chollet2021deep. <!-- The initial values of W and B are usually random, so we don't expect the initial model to do well at predicting slug slime production. -->
 
 ```{python simplenn, eval = TRUE, echo = FALSE}
 G = nx.DiGraph([("$x_1$", "y")])
@@ -559,7 +602,17 @@ knitr::include_graphics("./images/simple_nn.png")
 - The initial predictions from the first forward pass are $Y^{\prime} = W \cdot X + B = \begin{bmatrix} 0.5 \end{bmatrix} \cdot \begin{bmatrix} 0.2 & 0.25 & 0.4 & 0.7 \end{bmatrix} + \begin{bmatrix} 0 \end{bmatrix} = \begin{bmatrix} 0.05 & 0.15 & 0.3 & 0.35 \end{bmatrix}$.
 - The calculated loss using the MSE is $e = \frac{1}{4}((0.2 - 0.05)^2 + (0.25 - 0.15)^2 + (0.4 - 0.3)^2 + (0.7 - 0.35)^2) = 0.0412$.
 
+<!--
+- Example from:  https://towardsdatascience.com/training-a-neural-network-by-hand-1bcac4d82a6e.
+- X and Y are made up data to illustrate how the forward pass works.
+- The values of W and B are chosen randomly for the first forward pass.
+-->
+
 # Forward Pass III
+
+<!--
+- Obviously this isn't a great fit because we randomly choose the values of W and B, so next we will discuss how to update them to make the model fit better!
+-->
 
 ```{python forwardp, eval = TRUE, echo = FALSE, results = FALSE}
 Y = np.array([[0.2, 0.25, 0.4, 0.7]])
@@ -575,7 +628,8 @@ forwardp = Path("./images/forwardp.png")
 
 if not forwardp.is_file():
     plt.clf()
-    _ = plt.figure(figsize = (5, 3))
+    _ = plt.grid(False)
+    _ = plt.figure(figsize = (5, 3), facecolor='white')
     _ = plt.scatter(X, Y)
     _ = plt.axline((0, B[0][0]), slope = W[0][0], color = "red")
     _ = plt.text(0.2, 0.05, "$Y = 0.5X + 0$", fontsize = 12)
@@ -588,12 +642,6 @@ if not forwardp.is_file():
 knitr::include_graphics("./images/forwardp.png")
 ```
 
-<!--
-- Example from:  https://towardsdatascience.com/training-a-neural-network-by-hand-1bcac4d82a6e.
-- I hear in my mind from everyone who has taken Calculus:  You don't have to do this numerically, just take the derivative of the loss function, set it equal to zero, and solve!  While straw man in my mind is correct in this very simple example, for more complicated neural networks, analytic solutions are not forthcoming.
-- Obviously this isn't a great fit because we randomly choose the values of W and B, so next we will discuss how to update them to make the model fit better!
--->
-
 # Deep Learning Roadmap:  Optimization
 
 - The optimization step has the goal of _learning_ the values of $W$ and $B$ that minimize the MSE @chollet2021deep.
@@ -602,10 +650,16 @@ knitr::include_graphics("./images/forwardp.png")
 knitr::include_graphics("./images/deep_learning_optimizer.PNG", auto_pdf = TRUE)
 ```
 
-# Gradient Descent I
+# Gradient Descent
 
 - Optimization is done numerically through an algorithm called _gradient descent_.
-- Gradient descent works by stepping down a function in the opposite direction of the gradient @gradient_descent.
+- Gradient descent works by stepping down the graph of our data in the opposite direction of the gradient @gradient_descent.
+
+<!--
+- Imagine you are a blind stick man walking down this parabola.  So that you don't accidentally miss the bottom, you will take smaller and smaller steps as you go down the hill.  This is the intuitive idea behind gradient descent.
+
+-I hear in my mind from everyone who has taken Calculus:  You don't have to do this numerically, just take the derivative of the loss function, set it equal to zero, and solve!  While you are correct in this very simple example, for more complicated high-dimensional neural networks, deriving an analytic solution is very difficult.
+-->
 
 ```{python gradientDescent, eval = TRUE, echo = FALSE, results = FALSE}
 image = Image.open("./images/gradient_descent.png")
@@ -657,7 +711,9 @@ updatew = Path("./images/updatew.png")
 
 if not updatew.is_file():
     plt.clf()
-    _ = plt.title("$e = w^2$ and $\\frac{\partial e}{\partial w} = 2w$: $w_{u}$ if the Learning Rate is 0.3")
+    _ = plt.grid(False)
+    _ = plt.figure(facecolor='white')
+    _ = plt.title("$e = w^2$ and $\\frac{\\partial e}{\\partial w} = 2w$: $w_{u}$ if the Learning Rate is 0.3")
     _ = plt.axis((-0.8, 0.8, -0.01, 0.5))
     _ = plt.plot(x_num, y_num, color = "black")
     _ = plt.axline((-0.5, y_f(-0.5)), slope = dy_f(-0.5), color = "blue")
@@ -682,22 +738,29 @@ knitr::include_graphics("./images/updatew.png")
 - In this example, our initial value of W is -0.5, and at this point the rate of change is -1.  After updating W, the new value is -0.2, and at this point the rate of change is -0.4.
 - This step-down behavior is characteristic of a gradient descent algorithm.
 - Alpha is the learning rate.  In more complex cases where there may be many minimums, setting this parameter can prevent the algorithm from getting stuck at a local minimum instead of the absolute minimum.
+- I hear in my mind from everyone who has taken Calculus:  You don't have to do this numerically, just take the derivative of the loss function, set it equal to zero, and solve!  While straw man in my mind is correct in this very simple example, for more complicated neural networks, analytic solutions are not forthcoming.
 -->
 
-# A Note About Calculating Gradients
+# Backpropagation I
 
-- In the previous slides we made the assumption that calculating the gradient of a loss function is easy, but for neural networks with many layers and thousands of parameters, this is not true.
-- The problem of efficiently calculating the gradient is solved using _backpropagation_.
-    - Backpropagation works by chaining together the gradients of very simple expressions that are part of the computation graph of a neural network to calculate the otherwise very complicated gradient for the entire neural network.
-    - All of the individual gradients taken together have the appearance of being taped together across the computation graph of a neural network, which is why backpropagation is sometimes called _gradient tape_.
+- The problem of efficiently calculating the gradient so that the loss can be minimized is solved using _backpropagation_.
+    - Backpropagation works by chaining together the gradients of very simple expressions to calculate the complicated gradient for an entire neural network @chollet2021deep.
+    
+```{r computationGraph, echo = FALSE, fig.align = "center", dpi = 500}
+knitr::include_graphics("./images/computation_graph.PNG")
+```
 
 <!--
-- Backpropagation is an elegant solution to a difficult problem that deserves more attentions than this.  We will likely have a follow-on to this presentation that is devoted to this methdo.
+- The image below shows an example of a computation graph for a neural network.  The appearance of the gradients being chained all the way up from loss function to X is why backpropagation is sometimes called _gradient tape_ @chollet2021deep.  
+- For those who are familiar with the chain rule from calculus, this will look familiar.
+- Backpropagation is an elegant solution to a difficult problem and deserves more time than we have here.  For our purposes, whenever you see the word "Backpropagation" think "gradient" because that is all it is.
+-->
+
+# Chained Derivatives
 
 - If we have two functions $f(x)$ and $g(x)$ and we want to calculate $\frac{\partial f(g(x))}{\partial x}$ the chain rule states $\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial x}$.
 - If we have three functions $f(x)$, $g(x)$, $h(x)$ and we want to calculate $\frac{\partial f(g(h(x)))}{\partial x}$ the chain rules statues that $\frac{\partial f(g(h(x)))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial x}$.
 - If we have four functions $f(x)$, $g(x)$, $h(x)$, $j(x)$ and we want to calculate $\frac{\partial f(g(h(j(x))))}{\partial x}$ the chain rule states $\frac{\partial f(g(h(j(x))))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial j(x)} * \frac{\partial j(x)}{\partial x}$.
--->
 
 # Backward Pass
 
@@ -776,10 +839,12 @@ Y_pred = np.dot(W, X) + B
 
 e = 0.25*(((Y-Y_pred)**2).sum())
 
-epoch10 = Path("./images/epoch100.png")
+epoch100 = Path("./images/epoch100.png")
 
-if not epoch10.is_file():
+if not epoch100.is_file():
     plt.clf()
+    _ = plt.grid(False)
+    _ = plt.figure(facecolor='white')
     _ = plt.figure(figsize = (5, 3))
     _ = plt.scatter(X, Y)
     _ = plt.axline((0, B[0][0]), slope = W[0][0], color = "red")
@@ -795,20 +860,30 @@ knitr::include_graphics("./images/epoch100.png")
 
 # A Real Example:  Digit Image Classification
 
+<!--
+- The goal here not to teach you all how to code in Python, but to ground the some of the abstract concepts we have discussed in a real-world example.
+-->
+
 - One of the best use cases for neural networks is image classification.
 - We will use the MNIST data set that is 70,000 images of hand-written digits 0-9 that are 28x28 pixels @chollet2015keras.  
 
 ```{python mnist, eval = TRUE, echo = FALSE, results = FALSE}
-(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+from tensorflow.keras.datasets import mnist
+
+(train_images, train_labels), (test_images, test_labels) = (
+    mnist.load_data(path='mnist.npz')
+)
+
 digit = train_images[4]
 
 mnist = Path("./images/mnist.png")
 
 if not mnist.is_file():
     plt.clf()
-    _ = plt.figure(figsize = (5, 3))
+    fig = plt.figure(figsize = (5, 3), facecolor='white')
+    _ = plt.grid(False)
     _ = plt.imshow(digit, cmap=plt.cm.binary)
-    _ = plt.savefig("./images/mnist.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
+    _ = plt.savefig("./images/mnist.png", bbox_inches = "tight", pad_inches = 0, dpi = 600)
     plt.close("all")
 ```
 
@@ -825,7 +900,7 @@ knitr::include_graphics("./images/mnist.png")
 from tensorflow.keras.datasets import mnist
 
 (train_images, train_labels), (test_images, test_labels) = (
-    mnist.load_data()
+    mnist.load_data(path='mnist.npz')
 )
 
 train_images = train_images.reshape((60000, 28 * 28))
@@ -838,7 +913,7 @@ test_images = test_images.reshape((10000, 28 * 28))
 -  The output layer of the neural network is a 10-way Softmax classification layer that returns the probability that each digit belongs to a specific class. \newline
 
 ```{python mnistModelSetup, eval = TRUE, echo = TRUE, results = TRUE, size = "scriptsize"}
-from tensorflow import keras 
+from tensorflow import keras
 from tensorflow.keras import layers
 
 model = keras.Sequential([
@@ -862,11 +937,16 @@ model.compile(
 
 <!-- 
 - Sparse categorical cross entropy is a measure of loss for categorical data.
-- RMSprop is a special form of gradient descent that includes _momentum_ to prevent the algorithm from getting stuck at a local minima.
+- RMSprop is a special form of gradient descent that includes _momentum_ to prevent the algorithm from getting stuck at a local minima.  Think of a ball rolling down a hill, the higher the hill the grater the momentum and more likely you might go over the top of a another hill into an even deeper valley.
 - Accuracy is the percentage of accurately classified images.
 -->
 
 # A Real Example:  Model Fit
+
+<!--
+- The number of epochs is the number of forward and backward passes where we update the parameter values to get a better fit.
+- The batch size means that the parameters are fit on a random subset of the input data.
+-->
 
 - In the test data, the fitted neural network correctly classified each digit greater than 95\% of the time!
 - The difference in the accuracy of the training data and test data is an example of _overfitting_ @chollet2021deep. \newline
@@ -896,4 +976,12 @@ test_acc
     - We showed how after each _forward pass_ from the input to the output of the model, how the parameters in each layer are updated in the _backward pass_ using _gradient descent_ and _backpropagation_.
     - We concluded by presenting an example of fitting a neural network model using real data.
 
+<!-- 
+- Why now?
+    - In physics there is often a dance between theoretical findings and verification in experimental settings.  Machine learning follows a similar trajectory where new methods need to be tested with data and benchmarks to determine how well they will perform in the real world.  Many of the data sets used to test the latest developments in machine learning did exits until the 2010s @chollet2021deep.
+    - Statisticians have been torturing computer hardware with machine learning algorithms for a long time, but were restricted in their ability to perform operations in parallel on clusters of CPUs.  In the 2000s though, companies such NVIDIA and AMD developed cheap single-purpose chips called GPUs that perform massively parallel matrix computations in real time.  Initially GPUs were used to render polygons in virtual worlds, but in the 2010s statisticians discovered they could use the same APIs in machine learning and drastically improve the compute time @chollet2021deep.
+    - Deep neural networks with many layers are hard to train because of how complicated the gradients became.  Early optimization algorithms would produce feedback signals that faded away as the number of layers increased.  Algorithmic advances in the optimization schemes, such as backpropagation and it's variants, solved this very difficult problem @chollet2021deep.
+-->
+
 # References {.allowframebreaks}
+
