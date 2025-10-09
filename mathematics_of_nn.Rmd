@@ -44,6 +44,15 @@ from PIL import Image
 
 \emph{\Large Learning the math behind a statistical method is like learning the secret to a magic trick.  Once you know the math, you can never be fooled by the same trick again.}
 
+<!-- 
+- (1) Each OIG is responsible for the oversight of agencies that will implement deep learning AI to make more informed and better decisions, but come with risks such as bias, privacy, lack of transparency, and ethical complexities.
+- (2) Each OIG will also implement deep learning AI to improve their own efficiency of operations and the outcomes of audits, evaluations, and investigations.
+    - Auditors will use deep learning to write better recommendations based on data about how clients responded to previous recommendations.
+    - Evaluators will use deep learning to find evidence of systemic problems in large volumes of data.
+    - Investigators will use deep learning to find leads based on patterns observed their case data.
+- For these reasons, OIGs cannot afford to be ignorant about deep learning, which includes having at least an intuitive understanding of the statistical methods behind it.
+-->
+
 # The Deep in Deep Learning
 
 - Deep learning always refers to deep neural networks.  
@@ -102,6 +111,7 @@ if not translation.is_file():
     _ = plt.gcf().set_size_inches(7, 5)
     _ = plt.savefig("./images/translation.png", bbox_inches = "tight", pad_inches= 0, dpi = 550)
     plt.close("all")
+
 ```
 
 ```{r translationImage, echo = FALSE, fig.align = "center", dpi = 1200}
@@ -150,6 +160,7 @@ if not scale.is_file():
     _ = plt.gcf().set_size_inches(7, 5)
     _ = plt.savefig("./images/scale.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r scaleImage, echo = FALSE, fig.align = "center", dpi = 1200}
@@ -187,6 +198,7 @@ if not rotation.is_file():
     _ = plt.gcf().set_size_inches(7, 5)
     _ = plt.savefig("./images/rotation.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r rotationImage, echo = FALSE, fig.align = "center", dpi = 1200}
@@ -227,6 +239,7 @@ if not affine.is_file():
     _ = plt.gcf().set_size_inches(7, 5)
     _ = plt.savefig("./images/affine.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r affineImage, echo = FALSE, fig.align = "center", dpi = 1200}
@@ -280,6 +293,7 @@ if not derivative.is_file():
     _ = plt.gcf().set_size_inches(7, 5)
     _ = plt.savefig("./images/derivative.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r derivativeImage, echo = FALSE, fig.align = "center", dpi = 1100}
@@ -336,6 +350,7 @@ if not gradient.is_file():
     _ = plt.gcf().set_size_inches(7, 5)
     _ = plt.savefig("./images/gradient.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r gradientImage, echo = FALSE, fig.align = "center", dpi = 1100}
@@ -413,6 +428,7 @@ if not one_layer.is_file():
     _ = plt.text(0.3, 2, "$Y_{1 \\times N} = W^{(1)}_{1 \\times 3} \\cdot X_{3 \\times N} + B^{(1)}_{1 \\times 1}$", fontsize = 35, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
     _ = plt.savefig("./images/one_layer.png", bbox_inches = "tight", pad_inches= 0)
     plt.close("all")
+
 ```
 
 ```{r oneLayerImage, echo = FALSE, fig.align = "center", dpi = 400}
@@ -468,6 +484,7 @@ if not two_layer.is_file():
     _ = plt.text(1.65, 3.1, "$Y_{1 \\times N} = W^{(2)}_{1 \\times 4} \\cdot \\varrho(h^{(1)}_{4 \\times N}) + B^{(2)}_{1 \\times 1}$", fontsize = 40, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
     _ = plt.savefig("./images/two_layer.png", bbox_inches = "tight", pad_inches= 0)
 plt.close("all")
+
 ```
 
 ```{r twoLayerImage, echo = FALSE, fig.align = "left", dpi = 520}
@@ -525,6 +542,7 @@ if not affine.is_file():
     _ = plt.gcf().set_size_inches(7, 5)
     _ = plt.savefig("./images/relu.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r reluImage, echo = FALSE, fig.align = "center", dpi = 1200}
@@ -590,6 +608,7 @@ if not one_layer.is_file():
     _ = plt.text(0.3, 0.001, "$Y_{1 \\times N} = W^{(1)}_{1 \\times 1} \\cdot X_{1 \\times N} + B^{(1)}_{1 \\times 1}$", fontsize = 35, bbox = dict(boxstyle = "round", facecolor = "wheat", alpha=1))
     _ = plt.savefig("./images/simple_nn.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r simplennImage, echo = FALSE, fig.align = "center", dpi = 1700}
@@ -636,6 +655,7 @@ if not forwardp.is_file():
     _ = plt.title(f"MSE After the First Forward Pass: {round(e, 4)}")
     _ = plt.savefig("./images/forwardp.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r forwardpImage, echo = FALSE, fig.align = "center", dpi = 600}
@@ -681,12 +701,14 @@ if not gradient_descent_title.is_file():
     _ = plt.ylabel("$e$")
     _ = plt.savefig("./images/gradient_descent_title.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r gradientDescentTitleImage, echo = FALSE, dpi = 950, fig.align = "center", results = 'asis'}
 knitr::include_graphics("./images/gradient_descent_title.png", auto_pdf = TRUE)
 ```
 
+<!--
 # Gradient Descent II
 
 - In general, if we move $w$ and $b$ in the opposite direction of the gradient $\frac{\partial e}{\partial w}$ and $\frac{\partial e}{\partial b}$, then the MSE will decrease @chollet2021deep.
@@ -713,7 +735,7 @@ if not updatew.is_file():
     plt.clf()
     _ = plt.grid(False)
     _ = plt.figure(facecolor='white')
-    _ = plt.title("$e = w^2$ and $\\frac{\\partial e}{\\partial w} = 2w$: $w_{u}$ if the Learning Rate is 0.3")
+    _ = plt.title("$e = w^2$ and $\\frac{\partial e}{\partial w} = 2w$: $w_{u}$ if the Learning Rate is 0.3")
     _ = plt.axis((-0.8, 0.8, -0.01, 0.5))
     _ = plt.plot(x_num, y_num, color = "black")
     _ = plt.axline((-0.5, y_f(-0.5)), slope = dy_f(-0.5), color = "blue")
@@ -734,6 +756,8 @@ if not updatew.is_file():
 knitr::include_graphics("./images/updatew.png")
 ```
 
+-->
+
 <!--
 - In this example, our initial value of W is -0.5, and at this point the rate of change is -1.  After updating W, the new value is -0.2, and at this point the rate of change is -0.4.
 - This step-down behavior is characteristic of a gradient descent algorithm.
@@ -741,7 +765,8 @@ knitr::include_graphics("./images/updatew.png")
 - I hear in my mind from everyone who has taken Calculus:  You don't have to do this numerically, just take the derivative of the loss function, set it equal to zero, and solve!  While straw man in my mind is correct in this very simple example, for more complicated neural networks, analytic solutions are not forthcoming.
 -->
 
-# Backpropagation I
+<!--
+# A Note About Calculating Gradients
 
 - The problem of efficiently calculating the gradient so that the loss can be minimized is solved using _backpropagation_.
     - Backpropagation works by chaining together the gradients of very simple expressions to calculate the complicated gradient for an entire neural network @chollet2021deep.
@@ -749,18 +774,18 @@ knitr::include_graphics("./images/updatew.png")
 ```{r computationGraph, echo = FALSE, fig.align = "center", dpi = 500}
 knitr::include_graphics("./images/computation_graph.PNG")
 ```
+-->
 
 <!--
 - The image below shows an example of a computation graph for a neural network.  The appearance of the gradients being chained all the way up from loss function to X is why backpropagation is sometimes called _gradient tape_ @chollet2021deep.  
 - For those who are familiar with the chain rule from calculus, this will look familiar.
-- Backpropagation is an elegant solution to a difficult problem and deserves more time than we have here.  For our purposes, whenever you see the word "Backpropagation" think "gradient" because that is all it is.
--->
 
-# Chained Derivatives
+- Backpropagation is an elegant solution to a difficult problem and deserves more time than we have here.  For our purposes, whenever you see the word "backpropgation" think "gradient" because that is all it is.
 
 - If we have two functions $f(x)$ and $g(x)$ and we want to calculate $\frac{\partial f(g(x))}{\partial x}$ the chain rule states $\frac{\partial f(g(x))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial x}$.
 - If we have three functions $f(x)$, $g(x)$, $h(x)$ and we want to calculate $\frac{\partial f(g(h(x)))}{\partial x}$ the chain rules statues that $\frac{\partial f(g(h(x)))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial x}$.
 - If we have four functions $f(x)$, $g(x)$, $h(x)$, $j(x)$ and we want to calculate $\frac{\partial f(g(h(j(x))))}{\partial x}$ the chain rule states $\frac{\partial f(g(h(j(x))))}{\partial x} = \frac{\partial f(x)}{\partial g(x)} * \frac{\partial g(x)}{\partial h(x)} * \frac{\partial h(x)}{\partial j(x)} * \frac{\partial j(x)}{\partial x}$.
+-->
 
 # Backward Pass
 
@@ -852,6 +877,7 @@ if not epoch100.is_file():
     _ = plt.title(f"MSE after 100 Epochs: {round(e, 4)}")
     _ = plt.savefig("./images/epoch100.png", bbox_inches = "tight", pad_inches= 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r epoch10Image, echo = FALSE, fig.align = "center", dpi = 700}
@@ -885,6 +911,7 @@ if not mnist.is_file():
     _ = plt.imshow(digit, cmap=plt.cm.binary)
     _ = plt.savefig("./images/mnist.png", bbox_inches = "tight", pad_inches = 0, dpi = 600)
     plt.close("all")
+
 ```
 
 ```{r mnistImage, echo = FALSE, fig.align = "center", dpi = 700}
