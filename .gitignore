@@ -1,4 +1,4 @@
-pyenv
 .DS_Store
 .Rhistory
 .Rproj.user
+.venv

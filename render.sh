@@ -1,0 +1,1 @@
+quarto render mathematics_of_nn.qmd
