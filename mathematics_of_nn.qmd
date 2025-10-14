@@ -18,7 +18,7 @@ csl: ./csl/apa-numeric-superscript-brackets.csl
 # Why Learn the Mathematics of Deep Learning?
 
 <!--
-This presentation used python 3.12.
+This presentation used python 3.12.12.
 
 - Beamer in R markdown:  https://bookdown.org/yihui/rmarkdown/beamer-presentation.html
 - Beamer Theme Matrix:  https://mpetroff.net/files/beamer-theme-matrix/
