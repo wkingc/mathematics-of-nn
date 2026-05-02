@@ -1,1 +1,1 @@
-quarto render mathematics_of_nn.qmd
+quarto render mathematics_of_nn.qmd --no-cache 

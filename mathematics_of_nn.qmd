@@ -483,7 +483,7 @@ if not two_layer.is_file():
     _ = nx.draw_networkx(G, pos, **options)
     _ = plt.margins(0, 0.09)
     _ = plt.axis("off")
-    _ = plt.text(0.01, 3.1, "$h^{(1)}_{4 \\times N} = W^{(1)}_{4 \\times 3} \\cdot X_{3 \\times N} + B^{(1)}_{1 \\times 4}$", fontsize = 40, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
+    _ = plt.text(0.01, 3.1, "$h^{(1)}_{4 \\times N} = W^{(1)}_{4 \\times 3} \\cdot X_{3 \\times N} + B^{(1)}_{4 \\times 1}$", fontsize = 40, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
     _ = plt.text(1.65, 3.1, "$Y_{1 \\times N} = W^{(2)}_{1 \\times 4} \\cdot \\varrho(h^{(1)}_{4 \\times N}) + B^{(2)}_{1 \\times 1}$", fontsize = 40, bbox = dict(boxstyle='round', facecolor='wheat', alpha=1))
     _ = plt.savefig("./images/two_layer.png", bbox_inches = "tight", pad_inches= 0)
 plt.close("all")
